@@ -202,4 +202,18 @@ export const WORKBOOK_SECTIONS = [
       },
     ],
   },
+  {
+    title: '09 / INSTRUCTOR AND ORGANISER CHECKLIST',
+    items: [
+      {
+        id: 'instructor-checklist',
+        title: 'Make the workshop reproducible',
+        status: 'ready',
+        chapter: '09',
+        pageNumber: 1,
+        description: 'Screenshot target instructions, 5 live evidence requirements, 7 pre-event checks, and assessment guidance.',
+        icon: 'ListChecks',
+      },
+    ],
+  },
 ];

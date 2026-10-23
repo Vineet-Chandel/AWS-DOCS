@@ -563,6 +563,43 @@ const SEARCHABLE_TOPICS = [
     slug: 'next-learning-path',
     text: 'Next learning steps: HTTPS and custom domains, automated Git deployments, application logs and monitoring, backend hosting and databases.',
   },
+
+  // CHAPTER 9 - INSTRUCTOR AND ORGANISER CHECKLIST
+  {
+    pageId: 'instructor-checklist',
+    pageTitle: '09 • Instructor and Organiser Checklist: Make the workshop reproducible',
+    heading: 'Screenshot Targets for the Live Workshop',
+    slug: 'screenshot-targets-for-the-live-workshop',
+    text: '5 evidence targets: Screen 01 Launch Page, Screen 02 Network Rules, Screen 03 Instance Status, Screen 04 Terminal, Screen 05 Browser.',
+  },
+  {
+    pageId: 'instructor-checklist',
+    pageTitle: '09 • Instructor and Organiser Checklist: Make the workshop reproducible',
+    heading: 'Capture These Live Screenshots During the Workshop',
+    slug: 'capture-these-live-screenshots',
+    text: 'Live screenshot collection: EC2 launch instance page, security group inbound rules, instance status running 2/2 checks, terminal SSH/Nginx/HTTP 200, browser rendering public IP.',
+  },
+  {
+    pageId: 'instructor-checklist',
+    pageTitle: '09 • Instructor and Organiser Checklist: Make the workshop reproducible',
+    heading: 'Pre-Event Review Checklist',
+    slug: 'pre-event-review-checklist',
+    text: '7 pre-event checks: learner sign-in, workshop role permissions, repository access, practice deployment rehearsal, second challenge repo, organizer responsibilities, costs and cleanup.',
+  },
+  {
+    pageId: 'instructor-checklist',
+    pageTitle: '09 • Instructor and Organiser Checklist: Make the workshop reproducible',
+    heading: 'End-of-Class Assessment',
+    slug: 'end-of-class-assessment',
+    text: '6 conceptual questions: EC2 vs GitHub, Why Nginx, IAM vs Security Groups, curl localhost test, Restricting SSH, and Resource cleanup with mentor answer guidance.',
+  },
+  {
+    pageId: 'instructor-checklist',
+    pageTitle: '09 • Instructor and Organiser Checklist: Make the workshop reproducible',
+    heading: 'Ready for Review',
+    slug: 'ready-for-review',
+    text: 'Pre-distribution verification: Rehearse full deployment, confirm repo links, replace illustrative screenshots with live captures, remove secrets, confirm cleanup.',
+  },
 ];
 
 export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {

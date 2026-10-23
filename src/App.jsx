@@ -41,6 +41,9 @@ import { CostAwarenessAndCleanupPage, COST_AND_CLEANUP_HEADINGS } from './pages/
 // Chapter 8 Pages
 import { FurtherLearningResourcesPage, FURTHER_LEARNING_HEADINGS } from './pages/FurtherLearningResourcesPage';
 
+// Chapter 9 Pages
+import { InstructorOrganiserChecklistPage, INSTRUCTOR_CHECKLIST_HEADINGS } from './pages/InstructorOrganiserChecklistPage';
+
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { useTheme } from './hooks/useTheme';
 
@@ -62,6 +65,7 @@ const VALID_PAGES = [
   'security-and-permissions',
   'cost-and-cleanup',
   'further-learning',
+  'instructor-checklist',
 ];
 
 export function App() {
@@ -214,6 +218,13 @@ export function App() {
         return {
           pageComponent: <FurtherLearningResourcesPage onNavigate={handleNavigate} />,
           currentHeadings: FURTHER_LEARNING_HEADINGS,
+        };
+
+      // Chapter 9: Instructor and Organiser Checklist
+      case 'instructor-checklist':
+        return {
+          pageComponent: <InstructorOrganiserChecklistPage onNavigate={handleNavigate} />,
+          currentHeadings: INSTRUCTOR_CHECKLIST_HEADINGS,
         };
 
       default:

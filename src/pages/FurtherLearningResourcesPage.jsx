@@ -263,9 +263,9 @@ export function FurtherLearningResourcesPage({ onNavigate = () => {} }) {
           pageLabel: 'Chapter 07',
         }}
         next={{
-          id: 'overview',
-          title: 'Workshop Overview',
-          pageLabel: 'Return to Start',
+          id: 'instructor-checklist',
+          title: 'Make the workshop reproducible',
+          pageLabel: 'Chapter 09',
         }}
         onNavigate={onNavigate}
       />
