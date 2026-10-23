@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { Copy, Check } from 'lucide-react';
+import { motion } from 'framer-motion';
 import Prism from 'prismjs';
 
-// Import essential Prism language extensions
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-json';
 import 'prismjs/components/prism-yaml';
@@ -12,14 +12,11 @@ import 'prismjs/components/prism-sql';
 import 'prismjs/components/prism-markdown';
 import 'prismjs/components/prism-javascript';
 
-/**
- * Normalizes language string (e.g., 'js' -> 'javascript', 'yml' -> 'yaml').
- */
 function normalizeLanguage(lang) {
   if (!lang) return 'plaintext';
   const l = lang.toLowerCase().trim();
   if (l === 'js') return 'javascript';
-  if (l === 'ts') return 'javascript'; // Prism js parses clean TS keywords
+  if (l === 'ts') return 'javascript';
   if (l === 'sh' || l === 'shell' || l === 'zsh') return 'bash';
   if (l === 'yml') return 'yaml';
   if (l === 'docker') return 'docker';
@@ -28,10 +25,6 @@ function normalizeLanguage(lang) {
   return l;
 }
 
-/**
- * CodeBlock component with syntax highlighting, language badge,
- * and copy-to-clipboard functionality.
- */
 export function CodeBlock({ code, language = 'plaintext', className = '' }) {
   const [copied, setCopied] = useState(false);
   const normalizedLang = normalizeLanguage(language);
@@ -58,34 +51,42 @@ export function CodeBlock({ code, language = 'plaintext', className = '' }) {
   };
 
   return (
-    <div className={`my-5 rounded-lg border border-zinc-200/90 dark:border-zinc-800 bg-zinc-950 text-zinc-100 overflow-hidden shadow-sm ${className}`}>
+    <div
+      className={`my-6 border-2 border-black dark:border-white bg-[#0e0f12] text-zinc-100 shadow-[4px_4px_0px_#000000] dark:shadow-[4px_4px_0px_#ffffff] overflow-hidden ${className}`}
+    >
       {/* Code Header Bar */}
-      <div className="flex items-center justify-between px-4 py-2 bg-zinc-900/90 border-b border-zinc-800 text-xs">
-        <span className="font-mono text-zinc-400 font-medium lowercase tracking-wider select-none">
-          {language || 'text'}
+      <div className="flex items-center justify-between px-3 sm:px-4 py-2 bg-black border-b-2 border-black dark:border-zinc-800 text-xs">
+        <span className="font-mono text-xs font-bold uppercase tracking-wider text-black bg-[#fde047] px-2 py-0.5 border border-black select-none">
+          {language || 'code'}
         </span>
-        <button
+        <motion.button
           type="button"
           onClick={handleCopy}
-          className="flex items-center gap-1.5 px-2 py-1 rounded text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/80 transition-colors focus:outline-none focus:ring-1 focus:ring-zinc-500"
+          whileHover={{ x: -1, y: -1 }}
+          whileTap={{ x: 1, y: 1 }}
+          className={`flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono font-bold border-2 border-black transition-colors focus:outline-none ${
+            copied
+              ? 'bg-[#a6ff70] text-black shadow-[1.5px_1.5px_0px_#000000]'
+              : 'bg-white text-black shadow-[2px_2px_0px_#000000] hover:bg-slate-100'
+          }`}
           aria-label={copied ? 'Code copied to clipboard' : 'Copy code to clipboard'}
         >
           {copied ? (
             <>
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-emerald-400 text-[11px] font-medium">Copied!</span>
+              <Check className="w-3 h-3 stroke-[3]" />
+              <span>COPIED!</span>
             </>
           ) : (
             <>
-              <Copy className="w-3.5 h-3.5" />
-              <span className="text-[11px] font-medium">Copy</span>
+              <Copy className="w-3 h-3 stroke-[2.5]" />
+              <span>COPY</span>
             </>
           )}
-        </button>
+        </motion.button>
       </div>
 
-      {/* Code Body with Horizontal Scroll */}
-      <div className="overflow-x-auto p-4 text-[13px] leading-relaxed font-mono">
+      {/* Code Body */}
+      <div className="overflow-x-auto p-4 text-[13px] leading-relaxed font-mono bg-[#090a0d]">
         <pre className="m-0 p-0 bg-transparent">
           <code
             dangerouslySetInnerHTML={{ __html: highlightedHtml }}

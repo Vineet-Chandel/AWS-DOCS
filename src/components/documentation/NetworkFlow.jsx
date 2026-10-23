@@ -1,8 +1,9 @@
 import React from 'react';
 import { ArrowRight, ShieldCheck, Laptop, Globe, Server, Cpu, FileCode2, Terminal, ShieldAlert } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 /**
- * Visual networking flows for visitor HTTP access and administrator SSH access.
+ * Neo-Brutalist visual networking flows for visitor HTTP access and administrator SSH access.
  */
 export function NetworkFlow() {
   const visitorSteps = [
@@ -11,157 +12,163 @@ export function NetworkFlow() {
       detail: "The person enters your website's public URL in their browser address bar.",
       icon: Globe,
       badge: 'REQUEST',
-      tagColor: 'text-blue-600 dark:text-blue-400',
+      badgeBg: 'bg-[#67e8f9]',
     },
     {
       title: 'Security Group',
       detail: 'AWS acts as a virtual firewall, checking whether inbound TCP port 80 traffic is permitted.',
       icon: ShieldCheck,
       badge: 'FIREWALL :80',
-      tagColor: 'text-amber-600 dark:text-amber-400',
+      badgeBg: 'bg-[#fde047]',
     },
     {
       title: 'EC2 Public IP',
       detail: 'Traffic routes through the public IPv4 address directly into your virtual server.',
       icon: Server,
       badge: 'AWS CLOUD',
-      tagColor: 'text-purple-600 dark:text-purple-400',
+      badgeBg: 'bg-[#fda4af]',
     },
     {
       title: 'Nginx',
       detail: 'The web server receives the HTTP request and handles routing.',
       icon: Cpu,
       badge: 'DAEMON',
-      tagColor: 'text-indigo-600 dark:text-indigo-400',
+      badgeBg: 'bg-[#fb923c]',
     },
     {
       title: 'Website Files',
       detail: 'Nginx serves the matching HTML, CSS, and asset files back to the visitor.',
       icon: FileCode2,
       badge: 'RESPONSE',
-      tagColor: 'text-emerald-600 dark:text-emerald-400',
+      badgeBg: 'bg-[#a6ff70]',
     },
   ];
 
   const adminSteps = [
     {
       title: 'Your Computer',
-      detail: 'Local terminal executing the secure shell client (`ssh -i key.pem ...`).',
+      detail: 'Local terminal executing the secure shell client (ssh -i key.pem ...).',
       icon: Laptop,
       badge: 'ADMIN CLIENT',
+      badgeBg: 'bg-[#67e8f9]',
     },
     {
       title: 'SSH Protocol',
       detail: 'Encrypted tunnel connecting over TCP port 22 using your private key pair.',
       icon: Terminal,
       badge: 'TCP :22 ENCRYPTED',
+      badgeBg: 'bg-[#fde047]',
     },
     {
       title: 'EC2 Terminal',
-      detail: 'Root / ec2-user shell access for installing software and managing files.',
+      detail: 'Interactive remote command prompt inside Amazon Linux 2023 with root privileges.',
       icon: Server,
-      badge: 'SERVER SHELL',
+      badge: 'SERVER PROMPT',
+      badgeBg: 'bg-[#a6ff70]',
     },
   ];
 
   return (
-    <div className="space-y-12 my-8">
-      {/* 1. VISITOR PATH */}
-      <div>
-        <h3 id="how-visitors-reach-your-website" className="text-xl sm:text-2xl font-bold tracking-tight text-navy-900 dark:text-zinc-100 mb-3 scroll-mt-20">
-          How Does Someone Open Your Website?
-        </h3>
-        <p className="text-sm sm:text-base text-slate-700 dark:text-zinc-300 leading-relaxed mb-6">
-          Understanding network routing helps you troubleshoot deployment issues quickly. When a visitor requests your URL, their connection travels through five distinct stages:
+    <div className="my-8 space-y-8">
+      {/* 1. How Visitors Reach Your Website */}
+      <div className="border-2 border-black dark:border-white bg-white dark:bg-zinc-900 p-5 sm:p-7 shadow-[6px_6px_0px_#000000] dark:shadow-[6px_6px_0px_#ffffff]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b-2 border-black gap-2">
+          <div>
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-black bg-[#a6ff70] px-2 py-0.5 border border-black inline-block mb-1">
+              PORT 80 • PUBLIC WEB TRAFFIC
+            </span>
+            <h3 id="how-visitors-reach-your-website" className="text-lg sm:text-xl font-black text-black dark:text-white scroll-mt-20">
+              How Visitors Reach Your Website
+            </h3>
+          </div>
+          <span className="text-xs font-mono font-bold text-black dark:text-white">5-STAGE PATH</span>
+        </div>
+
+        <p className="text-xs sm:text-sm text-slate-700 dark:text-zinc-300 mb-6 font-sans">
+          When anyone navigates to your EC2 public IPv4 address, the request follows this path:
         </p>
 
-        {/* Visitor Visual Diagram */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-3 relative mb-6">
+        {/* Visitor 5-Step Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           {visitorSteps.map((step, idx) => {
             const Icon = step.icon;
-            const isLast = idx === visitorSteps.length - 1;
-
             return (
-              <div
+              <motion.div
                 key={idx}
-                className="relative flex flex-col justify-between p-3.5 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-xs"
+                whileHover={{ x: -1, y: -1 }}
+                className="p-3.5 border-2 border-black dark:border-zinc-700 bg-[#fbfbf9] dark:bg-zinc-800 shadow-[3px_3px_0px_#000000] flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className={`text-[10px] font-bold font-mono tracking-wider ${step.tagColor}`}>
+                    <Icon className="w-4 h-4 text-black dark:text-white stroke-[2.5]" />
+                    <span className={`text-[9px] font-mono font-bold px-1.5 py-0.2 border border-black text-black ${step.badgeBg}`}>
                       {step.badge}
                     </span>
-                    <Icon className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-500" />
                   </div>
-                  <h4 className="text-xs font-bold text-navy-900 dark:text-zinc-100 mb-1">
+                  <h4 className="text-xs font-bold text-black dark:text-white mb-1">
                     {step.title}
                   </h4>
                   <p className="text-[11px] text-slate-600 dark:text-zinc-400 leading-snug">
                     {step.detail}
                   </p>
                 </div>
-              </div>
+                <div className="mt-3 pt-1.5 border-t border-black/20 text-[10px] font-mono font-bold text-slate-400">
+                  STEP 0{idx + 1}
+                </div>
+              </motion.div>
             );
           })}
         </div>
-
-        {/* Networking Detail Callout */}
-        <div className="rounded-lg border border-amber-200 dark:border-amber-900/60 bg-amber-50/50 dark:bg-amber-950/20 p-4 text-xs sm:text-sm text-slate-800 dark:text-zinc-200 flex items-start gap-3">
-          <div className="p-1 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5">
-            <ShieldCheck className="w-4 h-4" />
-          </div>
-          <div>
-            <strong className="text-amber-900 dark:text-amber-300">Core Networking Rule:</strong>{' '}
-            HTTP uses <strong>TCP port 80</strong> in this exercise. The EC2 security group&apos;s inbound rules must explicitly permit HTTP traffic from <code>0.0.0.0/0</code> for the website to be publicly accessible to visitors.
-          </div>
-        </div>
       </div>
 
-      {/* 2. ADMINISTRATOR PATH */}
-      <div>
-        <h3 id="how-you-connect-to-the-server" className="text-xl sm:text-2xl font-bold tracking-tight text-navy-900 dark:text-zinc-100 mb-3 scroll-mt-20">
-          How Do You Manage the EC2 Instance?
-        </h3>
-        <p className="text-sm sm:text-base text-slate-700 dark:text-zinc-300 leading-relaxed mb-6">
-          Managing your cloud server requires administrative access that is isolated from public visitor traffic:
+      {/* 2. How You Connect to the Server */}
+      <div className="border-2 border-black dark:border-white bg-[#f4f3ee] dark:bg-zinc-900 p-5 sm:p-7 shadow-[6px_6px_0px_#000000] dark:shadow-[6px_6px_0px_#ffffff]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b-2 border-black gap-2">
+          <div>
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-black bg-[#fb923c] px-2 py-0.5 border border-black inline-block mb-1">
+              PORT 22 • ADMINISTRATIVE ACCESS
+            </span>
+            <h3 id="how-you-connect-to-the-server" className="text-lg sm:text-xl font-black text-black dark:text-white scroll-mt-20">
+              How You Connect to the Server (SSH)
+            </h3>
+          </div>
+          <span className="text-xs font-mono font-bold text-black dark:text-white">ENCRYPTED TUNNEL</span>
+        </div>
+
+        <p className="text-xs sm:text-sm text-slate-700 dark:text-zinc-300 mb-6 font-sans">
+          You don&apos;t use HTTP to manage the server. Instead, you connect directly to the Linux terminal using SSH:
         </p>
 
-        {/* Admin Visual Flow */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+        {/* Admin 3-Step Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {adminSteps.map((step, idx) => {
             const Icon = step.icon;
-
             return (
-              <div
+              <motion.div
                 key={idx}
-                className="p-4 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-xs flex flex-col justify-between"
+                whileHover={{ x: -1, y: -1 }}
+                className="p-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-zinc-800 shadow-[3px_3px_0px_#000000] flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-bold font-mono tracking-wider text-slate-500 dark:text-zinc-400">
+                    <Icon className="w-4 h-4 text-black dark:text-white stroke-[2.5]" />
+                    <span className={`text-[10px] font-mono font-bold px-1.5 py-0.2 border border-black text-black ${step.badgeBg}`}>
                       {step.badge}
                     </span>
-                    <Icon className="w-3.5 h-3.5 text-slate-400" />
                   </div>
-                  <h4 className="text-sm font-bold text-navy-900 dark:text-zinc-100 mb-1">
+                  <h4 className="text-sm font-bold text-black dark:text-white mb-1">
                     {step.title}
                   </h4>
                   <p className="text-xs text-slate-600 dark:text-zinc-400 leading-snug">
                     {step.detail}
                   </p>
                 </div>
-              </div>
+                <div className="mt-3 pt-1.5 border-t border-black/20 text-[10px] font-mono font-bold text-slate-400">
+                  STAGE 0{idx + 1}
+                </div>
+              </motion.div>
             );
           })}
-        </div>
-
-        {/* Security Note Callout */}
-        <div className="rounded-lg border border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/60 p-4 text-xs sm:text-sm text-slate-700 dark:text-zinc-300 flex items-start gap-3">
-          <ShieldAlert className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-          <div>
-            <strong className="text-slate-900 dark:text-zinc-100">Security Distinction:</strong>{' '}
-            HTTP access for visitors and SSH access for administrators serve different purposes. Do not leave administrative access unnecessarily open to everyone. Restrict port 22 access to your current IP address (<code>My IP</code>) whenever possible.
-          </div>
         </div>
       </div>
     </div>

@@ -1,79 +1,86 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 /**
- * Responsive 120-minute run plan timeline grid with 6 phases.
- * Follows the exact layout, colors, and timing from Reference Image 1.
+ * Neo-Brutalist 120-minute run plan timeline grid.
  */
 export function WorkshopTimeline() {
   const items = [
     {
-      time: '00–15 MIN • KICKOFF',
+      time: '00–15 MIN',
+      tag: 'KICKOFF',
       desc: 'Explain deployment, tools, IAM, networking, and cost awareness.',
       stage: 'START',
-      color: 'text-blue-600 dark:text-blue-400',
+      badgeBg: 'bg-[#67e8f9]',
     },
     {
-      time: '15–30 MIN • FILE TOUR',
+      time: '15–30 MIN',
+      tag: 'FILE TOUR',
       desc: 'Open the GitHub repository and identify the website entry files.',
       stage: 'UNDERSTAND',
-      color: 'text-teal-600 dark:text-teal-400',
+      badgeBg: 'bg-[#a6ff70]',
     },
     {
-      time: '30–65 MIN • BUILD',
+      time: '30–65 MIN',
+      tag: 'BUILD',
       desc: 'Launch EC2, connect to it, install Nginx, and publish the website files.',
       stage: 'DEPLOY',
-      color: 'text-amber-600 dark:text-amber-400',
+      badgeBg: 'bg-[#fde047]',
     },
     {
-      time: '65–75 MIN • VERIFY',
+      time: '65–75 MIN',
+      tag: 'VERIFY',
       desc: 'Check Nginx, HTTP status, and the public website URL.',
       stage: 'PROVE IT',
-      color: 'text-emerald-600 dark:text-emerald-400',
+      badgeBg: 'bg-[#a6ff70]',
     },
     {
-      time: '75–105 MIN • CHALLENGE',
+      time: '75–105 MIN',
+      tag: 'CHALLENGE',
       desc: 'Deploy a second project independently, using hints rather than a command-by-command walkthrough.',
       stage: 'PRACTICE',
-      color: 'text-purple-600 dark:text-purple-400',
+      badgeBg: 'bg-[#fb923c]',
     },
     {
-      time: '105–120 MIN • WRAP',
+      time: '105–120 MIN',
+      tag: 'WRAP',
       desc: 'Discuss troubleshooting, safe resource cleanup, and further learning.',
       stage: 'FINISH',
-      color: 'text-rose-600 dark:text-rose-400',
+      badgeBg: 'bg-[#fda4af]',
     },
   ];
 
   return (
     <div className="my-8">
       {/* Timeline Grid Container */}
-      <div className="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xs overflow-hidden">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 divide-y sm:divide-y-0 divide-slate-200 dark:divide-zinc-800 sm:[&>*:not(:nth-child(-n+3))]:border-t sm:[&>*:not(:nth-child(-n+3))]:border-slate-200 dark:sm:[&>*:not(:nth-child(-n+3))]:border-zinc-800 lg:[&>*:not(:nth-child(3n+1))]:border-l lg:[&>*:not(:nth-child(3n+1))]:border-slate-200 dark:lg:[&>*:not(:nth-child(3n+1))]:border-zinc-800">
+      <div className="border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-[5px_5px_0px_#000000] dark:shadow-[5px_5px_0px_#ffffff] overflow-hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 divide-y-2 sm:divide-y-0 divide-black dark:divide-zinc-800 sm:[&>*:not(:nth-child(-n+3))]:border-t-2 sm:[&>*:not(:nth-child(-n+3))]:border-black dark:sm:[&>*:not(:nth-child(-n+3))]:border-zinc-800 lg:[&>*:not(:nth-child(3n+1))]:border-l-2 lg:[&>*:not(:nth-child(3n+1))]:border-black dark:lg:[&>*:not(:nth-child(3n+1))]:border-zinc-800">
           {items.map((item, index) => (
-            <div
+            <motion.div
               key={index}
-              className="p-4 sm:p-5 flex flex-col justify-between hover:bg-slate-50/50 dark:hover:bg-zinc-900/40 transition-colors"
+              whileHover={{ backgroundColor: '#f4f3ee' }}
+              className="p-4 sm:p-5 flex flex-col justify-between transition-colors bg-white dark:bg-zinc-900"
             >
               <div>
-                <div className={`text-xs font-bold tracking-wider font-mono uppercase mb-2 ${item.color}`}>
-                  {item.time}
+                <div className="flex items-center justify-between mb-2">
+                  <span className={`text-[10px] font-bold tracking-wider font-mono uppercase px-2 py-0.5 border border-black text-black ${item.badgeBg}`}>
+                    {item.time} • {item.tag}
+                  </span>
+                  <span className="font-mono text-[11px] font-bold text-slate-400">0{index + 1}</span>
                 </div>
-                <p className="text-sm text-slate-700 dark:text-zinc-300 leading-snug">
+                <p className="text-xs sm:text-sm font-medium text-slate-800 dark:text-zinc-200 leading-relaxed mt-2">
                   {item.desc}
                 </p>
               </div>
-              <div className={`mt-4 text-[11px] font-bold tracking-wider uppercase font-mono ${item.color}`}>
-                {item.stage}
+
+              <div className="mt-4 pt-2 border-t border-black/10 text-[10px] font-mono font-bold uppercase tracking-wider text-black dark:text-zinc-400 flex items-center justify-between">
+                <span>{item.stage}</span>
+                <span>→</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-
-      {/* Workshop Route Summary Footer Note */}
-      <p className="mt-4 text-xs italic text-slate-600 dark:text-zinc-400 leading-relaxed">
-        <strong>Workshop route:</strong> GitHub → Amazon EC2 (Amazon Linux 2023) → Nginx → public IPv4 URL. This workshop serves static website files; it does not need a database or Node.js runtime on the server.
-      </p>
     </div>
   );
 }

@@ -1,56 +1,62 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 /**
- * Three connected learning phases from Reference Image 1.
+ * Three connected learning phases transformed into Neo-Brutalist cards.
  */
 export function LearningPhases() {
   const phases = [
     {
       num: '01',
       title: 'UNDERSTAND',
-      desc: 'Learn the AWS words and prepare your access.',
+      desc: 'Learn the AWS vocabulary, architecture, and prepare your account credentials.',
       tag: 'INTRO + PREREQUISITES',
-      color: 'text-blue-600 dark:text-blue-400',
-      bgLight: 'hover:bg-blue-50/20 dark:hover:bg-blue-950/10',
+      badgeBg: 'bg-[#67e8f9]',
     },
     {
       num: '02',
       title: 'DEPLOY',
-      desc: 'Launch EC2, install Nginx, publish website files.',
+      desc: 'Launch Amazon EC2, install Nginx via SSH, and copy live website files.',
       tag: 'MENTOR-LED BUILD',
-      color: 'text-amber-600 dark:text-amber-400',
-      bgLight: 'hover:bg-amber-50/20 dark:hover:bg-amber-950/10',
+      badgeBg: 'bg-[#fde047]',
     },
     {
       num: '03',
       title: 'PROVE IT',
-      desc: 'Use the URL, commands and browser to verify.',
+      desc: 'Verify public IPv4 access, run health checks, and debug network issues.',
       tag: 'CHECK + DEBUG',
-      color: 'text-emerald-600 dark:text-emerald-400',
-      bgLight: 'hover:bg-emerald-50/20 dark:hover:bg-emerald-950/10',
+      badgeBg: 'bg-[#a6ff70]',
     },
   ];
 
   return (
-    <div className="my-8 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xs overflow-hidden">
-      <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-zinc-800">
+    <div className="my-8 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-[5px_5px_0px_#000000] dark:shadow-[5px_5px_0px_#ffffff] overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-3 divide-y-2 md:divide-y-0 md:divide-x-2 divide-black dark:divide-zinc-800">
         {phases.map((phase) => (
-          <div
+          <motion.div
             key={phase.num}
-            className={`p-5 flex flex-col justify-between transition-colors ${phase.bgLight}`}
+            whileHover={{ backgroundColor: '#f4f3ee' }}
+            className="p-5 sm:p-6 flex flex-col justify-between transition-colors bg-white dark:bg-zinc-900"
           >
             <div>
-              <div className={`text-xs font-bold tracking-wider uppercase font-mono mb-2 ${phase.color}`}>
-                {phase.num} {phase.title}
+              <div className="flex items-center justify-between mb-3">
+                <span className={`text-[10px] font-bold tracking-wider uppercase font-mono px-2 py-0.5 border border-black text-black ${phase.badgeBg}`}>
+                  PHASE {phase.num}
+                </span>
+                <span className="font-mono text-xs font-bold text-slate-400">0{phase.num}/03</span>
               </div>
-              <p className="text-sm font-medium text-slate-800 dark:text-zinc-200 leading-snug">
+              <h4 className="text-base font-black text-black dark:text-white uppercase tracking-tight mb-2">
+                {phase.title}
+              </h4>
+              <p className="text-xs sm:text-sm font-medium text-slate-700 dark:text-zinc-300 leading-relaxed">
                 {phase.desc}
               </p>
             </div>
-            <div className={`mt-4 text-[11px] font-bold tracking-wider uppercase font-mono ${phase.color}`}>
-              {phase.tag}
+            <div className="mt-5 pt-3 border-t-2 border-black/10 dark:border-zinc-800 text-[10px] font-mono font-bold uppercase tracking-wider text-black dark:text-white flex items-center justify-between">
+              <span>{phase.tag}</span>
+              <span>→</span>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

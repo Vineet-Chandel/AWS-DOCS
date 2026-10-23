@@ -29,7 +29,7 @@ export function InspectAndLaunchPage({ onNavigate = () => {} }) {
   ];
 
   return (
-    <article className="max-w-[840px] mx-auto px-4 sm:px-8 py-8 lg:py-10">
+    <article className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4 sm:px-8 py-8 lg:py-10">
       {/* Chapter Header */}
       <ChapterHeader
         chapterNumber="02"

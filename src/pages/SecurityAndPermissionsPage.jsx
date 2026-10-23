@@ -137,7 +137,7 @@ export function SecurityAndPermissionsPage({ onNavigate = () => {} }) {
   ];
 
   return (
-    <article className="max-w-[840px] mx-auto w-full px-4 sm:px-8 py-8 md:py-12">
+    <article className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto w-full px-4 sm:px-8 py-8 md:py-12">
       {/* Chapter Indicator & Editorial Title */}
       <ChapterHeader
         chapterNumber="06"

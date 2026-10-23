@@ -31,42 +31,44 @@ export function IntroductionPage({ onNavigate = () => {} }) {
   ];
 
   return (
-    <article className="max-w-[840px] mx-auto px-4 sm:px-8 py-8 lg:py-10">
+    <article className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4 sm:px-8 py-8 lg:py-10">
       {/* SECTION 1: PAGE HEADER */}
       <header className="mb-10">
         <Breadcrumbs items={breadcrumbItems} onNavigate={onNavigate} />
 
-        {/* Eyebrow from Reference Image 1 */}
-        <div className="text-xs sm:text-sm font-bold font-sans tracking-wide uppercase text-amber-600 dark:text-amber-500 mb-2.5 select-none">
-          THE PRACTICAL AWS STARTER
+        {/* Eyebrow */}
+        <div className="mb-3 select-none">
+          <span className="text-xs font-mono font-bold tracking-wider uppercase text-black bg-[#a6ff70] px-2.5 py-1 border-2 border-black shadow-[2px_2px_0px_#000000]">
+            THE PRACTICAL AWS STARTER
+          </span>
         </div>
 
-        {/* Main Heading - Editorial Serif */}
-        <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-serif font-bold text-navy-950 dark:text-zinc-50 tracking-tight leading-[1.15] mb-4">
+        {/* Main Heading */}
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-black dark:text-white tracking-tight leading-[1.1] mb-3">
           Deploy your first website to AWS
         </h1>
 
         {/* Subtitle */}
-        <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-zinc-300 font-serif italic leading-relaxed mb-6">
+        <p className="text-base sm:text-lg text-slate-700 dark:text-zinc-300 font-medium leading-relaxed mb-6 font-sans">
           A visual, step-by-step workbook for the 2-hour AWS Cloud Launchpad workshop.
         </p>
 
         {/* Metadata Row */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-2 pb-4 border-b border-slate-200 dark:border-zinc-800 text-xs text-slate-500 dark:text-zinc-400 select-none">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-zinc-800/80 text-slate-700 dark:text-zinc-300 font-medium">
-            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-2 pb-4 border-b-2 border-black dark:border-white text-xs select-none">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-white dark:bg-zinc-800 text-black dark:text-white font-mono font-bold shadow-[2px_2px_0px_#000000]">
+            <Sparkles className="w-3.5 h-3.5 stroke-[2.5]" />
             Beginner-friendly
           </span>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-zinc-800/80 text-slate-700 dark:text-zinc-300 font-medium">
-            <Clock className="w-3.5 h-3.5 text-blue-500" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-white dark:bg-zinc-800 text-black dark:text-white font-mono font-bold shadow-[2px_2px_0px_#000000]">
+            <Clock className="w-3.5 h-3.5 stroke-[2.5]" />
             ~120 minutes
           </span>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-zinc-800/80 text-slate-700 dark:text-zinc-300 font-medium">
-            <Layers className="w-3.5 h-3.5 text-indigo-500" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-white dark:bg-zinc-800 text-black dark:text-white font-mono font-bold shadow-[2px_2px_0px_#000000]">
+            <Layers className="w-3.5 h-3.5 stroke-[2.5]" />
             Static website deployment
           </span>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-zinc-800/80 text-slate-700 dark:text-zinc-300 font-medium">
-            <Shield className="w-3.5 h-3.5 text-emerald-500" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 border-2 border-black bg-white dark:bg-zinc-800 text-black dark:text-white font-mono font-bold shadow-[2px_2px_0px_#000000]">
+            <Shield className="w-3.5 h-3.5 stroke-[2.5]" />
             Hands-on learning
           </span>
         </div>

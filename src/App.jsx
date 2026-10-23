@@ -5,6 +5,8 @@ import { RightTableOfContents } from './components/layout/RightTableOfContents';
 import { ReadingProgress } from './components/ReadingProgress';
 import { DocumentSearch } from './components/DocumentSearch';
 import { BackToTop } from './components/BackToTop';
+import { FullWidthBottomBanner } from './components/layout/FullWidthBottomBanner';
+import { NeoButton } from './components/ui/NeoButton';
 
 // Introduction Overview Page
 import { IntroductionPage, INTRODUCTION_HEADINGS } from './pages/IntroductionPage';
@@ -236,7 +238,7 @@ export function App() {
   }, [activePage]);
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 dark:bg-zinc-950 dark:text-zinc-100 flex flex-col font-sans transition-colors duration-150">
+    <div className="min-h-screen neo-grid-bg text-black dark:text-zinc-100 flex flex-col font-sans transition-colors duration-150">
       {/* Sticky Top Header */}
       <AppHeader
         onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
@@ -250,8 +252,8 @@ export function App() {
       {/* Reading Progress Indicator */}
       <ReadingProgress />
 
-      {/* Main 3-Column Documentation Container */}
-      <div className="flex-1 flex w-full max-w-7xl mx-auto">
+      {/* Main 3-Column Documentation Container - spans 100% full screen width */}
+      <div className="flex-1 flex w-full">
         {/* Column 1: Left Global Navigation Sidebar */}
         <Sidebar
           activePage={activePage}
@@ -261,27 +263,33 @@ export function App() {
         />
 
         {/* Column 2: Central Documentation Reading Surface */}
-        <main className="flex-1 min-w-0 lg:pl-64 transition-all duration-150">
+        <main className="flex-1 min-w-0 lg:pl-64 xl:pl-72 transition-all duration-150">
           <div className="flex flex-col min-h-full">
-            {pageComponent}
+            <div className="w-full">
+              {pageComponent}
+            </div>
+
+            {/* Full Screen Width Bottom Banner: Uses src/public/assets/image.png */}
+            <FullWidthBottomBanner onNavigate={handleNavigate} />
 
             {/* Document Article Footer */}
-            <footer className="max-w-[840px] mx-auto w-full px-4 sm:px-8 py-8 mt-auto border-t border-workbook-border dark:border-zinc-800 text-xs text-slate-500 dark:text-zinc-400 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <footer className="w-full px-4 sm:px-8 py-6 mt-auto border-t-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-[0_-2px_0px_#000000] text-xs font-mono text-black dark:text-zinc-300 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-2">
-                <span className="font-semibold text-workbook-navy dark:text-zinc-300">
+                <span className="w-2.5 h-2.5 bg-[#a6ff70] border border-black inline-block" />
+                <span className="font-bold text-black dark:text-white uppercase tracking-wider">
                   AWS Cloud Launchpad
                 </span>
                 <span>•</span>
-                <span>Deploy Your First Website to AWS</span>
+                <span className="text-slate-600 dark:text-zinc-400">Deploy Your First Website to AWS</span>
               </div>
               <div className="flex items-center gap-4">
-                <button
-                  type="button"
+                <NeoButton
+                  variant="lime"
+                  size="sm"
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                  className="hover:text-workbook-navy dark:hover:text-zinc-100 underline underline-offset-4 transition-colors"
                 >
-                  Return to top
-                </button>
+                  Return to top ↑
+                </NeoButton>
               </div>
             </footer>
           </div>

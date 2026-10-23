@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   BookOpen,
   CheckCircle2,
@@ -22,6 +23,7 @@ import {
   Compass,
   X,
   FileText,
+  ChevronDown,
 } from 'lucide-react';
 import { WORKBOOK_SECTIONS } from '../../data/navigation';
 
@@ -54,6 +56,36 @@ export function Sidebar({
   isOpen = false,
   onClose = () => {},
 }) {
+  // Only display sections and items that are fully created
+  const activeSections = WORKBOOK_SECTIONS.map((section) => ({
+    ...section,
+    items: section.items.filter((item) => item.status === 'ready'),
+  })).filter((section) => section.items.length > 0);
+
+  const totalLessons = activeSections.reduce((acc, sec) => acc + sec.items.length, 0);
+
+  const findSectionTitleForPage = (pageId, sections) => {
+    const found = sections.find((sec) => sec.items.some((item) => item.id === pageId));
+    return found ? found.title : null;
+  };
+
+  // State tracking open section - defaults to the active page's section
+  const [expandedSections, setExpandedSections] = useState(() => {
+    const initialSec = findSectionTitleForPage(activePage, activeSections);
+    return initialSec ? [initialSec] : [];
+  });
+
+  // Auto-expand section if activePage changes from external sources (search, hash, next/prev)
+  useEffect(() => {
+    const currentSec = findSectionTitleForPage(activePage, activeSections);
+    if (currentSec) {
+      setExpandedSections((prev) => {
+        if (prev.includes(currentSec)) return prev;
+        return [currentSec];
+      });
+    }
+  }, [activePage]);
+
   // Close drawer on ESC
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -77,108 +109,161 @@ export function Sidebar({
     };
   }, [isOpen]);
 
+  const handleSectionClick = (section) => {
+    const isExpanded = expandedSections.includes(section.title);
+    if (isExpanded) {
+      setExpandedSections((prev) => prev.filter((t) => t !== section.title));
+    } else {
+      setExpandedSections([section.title]);
+      if (section.items && section.items.length > 0) {
+        onSelectPage(section.items[0].id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  };
+
   const handleItemClick = (id) => {
     onSelectPage(id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
     onClose();
   };
 
-  // Only display sections and items that are fully created
-  const activeSections = WORKBOOK_SECTIONS.map((section) => ({
-    ...section,
-    items: section.items.filter((item) => item.status === 'ready'),
-  })).filter((section) => section.items.length > 0);
-
-  const totalLessons = activeSections.reduce((acc, sec) => acc + sec.items.length, 0);
-
   return (
     <>
       {/* Mobile Drawer Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-zinc-900/50 backdrop-blur-xs lg:hidden transition-opacity"
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs lg:hidden transition-opacity"
           onClick={onClose}
           aria-hidden="true"
         />
       )}
 
-      {/* Sidebar Navigation Panel */}
+      {/* Neo-Brutalist Sidebar Panel */}
       <aside
         id="global-sidebar"
         aria-label="Global Documentation Navigation"
-        className={`fixed top-14 bottom-0 z-40 w-64 flex flex-col bg-white dark:bg-zinc-950 border-r border-slate-200 dark:border-zinc-800 transition-transform duration-200 ease-in-out lg:translate-x-0 ${
-          isOpen ? 'translate-x-0 left-0 shadow-2xl lg:shadow-none' : '-translate-x-full lg:translate-x-0'
-        }`}
+        className={`fixed top-0 bottom-0 lg:top-14 ${
+          isOpen ? 'z-45 translate-x-0 left-0 shadow-[4px_0px_0px_#000000] lg:shadow-none' : 'z-20 -translate-x-full lg:translate-x-0 left-0'
+        } w-72 sm:w-80 max-w-[85vw] lg:w-64 xl:w-72 flex flex-col bg-[#fbfbf9] dark:bg-zinc-950 border-r-2 border-black dark:border-white transition-transform duration-200 ease-in-out`}
       >
         {/* Mobile Header in Drawer */}
-        <div className="flex items-center justify-between p-3.5 border-b border-slate-100 dark:border-zinc-800 lg:hidden">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-zinc-300">
-            Documentation Menu
-          </span>
-          <button
+        <div className="flex items-center justify-between p-3.5 border-b-2 border-black dark:border-zinc-800 bg-[#f4f3ee] dark:bg-zinc-900 lg:hidden">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 bg-[#a6ff70] border border-black inline-block" />
+            <span className="text-xs font-bold uppercase tracking-wider text-black dark:text-white">
+              DOCUMENTATION MENU
+            </span>
+          </div>
+          <motion.button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-md text-slate-400 hover:text-slate-700 dark:hover:text-zinc-200"
+            whileHover={{ x: -1, y: -1 }}
+            whileTap={{ x: 1, y: 1 }}
+            className="p-1.5 border-2 border-black dark:border-white bg-white dark:bg-zinc-800 text-black dark:text-white shadow-[2px_2px_0px_#000000] focus:outline-none"
             aria-label="Close navigation menu"
           >
-            <X className="w-5 h-5" />
-          </button>
+            <X className="w-4 h-4 stroke-[2.5]" />
+          </motion.button>
         </div>
 
         {/* Scrollable Navigation Groups */}
-        <nav className="flex-1 overflow-y-auto px-3 py-3 space-y-5 custom-scrollbar text-xs">
-          {activeSections.map((section, idx) => (
-            <div key={idx} className="space-y-1">
-              <div className="px-2.5 py-1 text-[11px] font-bold tracking-wider text-slate-400 dark:text-zinc-500 uppercase select-none">
-                {section.title}
-              </div>
+        <nav className="flex-1 overflow-y-auto p-3 space-y-2.5 custom-scrollbar text-xs">
+          {activeSections.map((section, idx) => {
+            const isExpanded = expandedSections.includes(section.title);
+            const hasActiveItem = section.items.some((item) => item.id === activePage);
 
-              <div className="space-y-0.5">
-                {section.items.map((item) => {
-                  const isActive = activePage === item.id;
-                  const Icon = ICON_MAP[item.icon] || FileText;
+            return (
+              <div key={idx} className="space-y-1.5">
+                {/* Main Section Header Trigger Button */}
+                <motion.button
+                  type="button"
+                  onClick={() => handleSectionClick(section)}
+                  whileHover={{ x: -1, y: -1 }}
+                  whileTap={{ x: 1.5, y: 1.5 }}
+                  aria-expanded={isExpanded}
+                  className={`w-full flex items-center justify-between px-3 py-2 text-left transition-all duration-100 select-none group focus:outline-none border-2 border-black dark:border-zinc-700 ${
+                    hasActiveItem
+                      ? 'bg-black text-white dark:bg-white dark:text-black shadow-[2.5px_2.5px_0px_#a6ff70] font-bold'
+                      : isExpanded
+                      ? 'bg-white dark:bg-zinc-900 text-black dark:text-white shadow-[2px_2px_0px_#000000] dark:shadow-[2px_2px_0px_#ffffff] font-bold'
+                      : 'bg-white/80 dark:bg-zinc-900/60 text-slate-800 dark:text-zinc-300 hover:bg-[#f4f3ee] dark:hover:bg-zinc-900 hover:text-black dark:hover:text-white shadow-[1.5px_1.5px_0px_#000000]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold tracking-wider uppercase truncate">
+                      {section.title}
+                    </span>
+                    {section.items.length > 1 && (
+                      <span className={`text-[10px] font-mono px-1.5 py-0.2 border border-black font-bold shrink-0 ${
+                        hasActiveItem ? 'bg-[#a6ff70] text-black' : 'bg-slate-100 text-black'
+                      }`}>
+                        {section.items.length}
+                      </span>
+                    )}
+                  </div>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 shrink-0 stroke-[2.5] transition-transform duration-200 ${
+                      isExpanded ? 'rotate-0' : '-rotate-90'
+                    }`}
+                  />
+                </motion.button>
 
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => handleItemClick(item.id)}
-                      className={`w-full flex items-center justify-between px-2.5 py-2.5 rounded-lg text-left transition-colors group relative ${
-                        isActive
-                          ? 'bg-slate-100 dark:bg-zinc-800/90 text-navy-950 dark:text-zinc-100 font-semibold'
-                          : 'text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-900 hover:text-slate-900 dark:hover:text-zinc-200'
-                      }`}
+                {/* Dropdown Sub-sections: visible ONLY when main section is expanded */}
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.15 }}
+                      className="pl-2 ml-3 border-l-2 border-black dark:border-zinc-700 space-y-1 my-1 overflow-hidden"
                     >
-                      {/* Active Indicator Strip */}
-                      {isActive && (
-                        <span
-                          className="absolute left-0 top-2 bottom-2 w-1 bg-workbook-blue rounded-r"
-                          aria-hidden="true"
-                        />
-                      )}
+                      {section.items.map((item) => {
+                        const isActive = activePage === item.id;
+                        const Icon = ICON_MAP[item.icon] || FileText;
 
-                      <div className="flex items-center gap-2.5 min-w-0 pr-1">
-                        <Icon
-                          className={`w-3.5 h-3.5 shrink-0 ${
-                            isActive
-                              ? 'text-workbook-blue dark:text-blue-400'
-                              : 'text-slate-400 group-hover:text-slate-600 dark:text-zinc-500 dark:group-hover:text-zinc-300'
-                          }`}
-                        />
-                        <span className="truncate leading-snug">{item.title}</span>
-                      </div>
-                    </button>
-                  );
-                })}
+                        return (
+                          <motion.button
+                            key={item.id}
+                            type="button"
+                            onClick={() => handleItemClick(item.id)}
+                            whileHover={{ x: -1, y: -1 }}
+                            whileTap={{ x: 1.5, y: 1.5 }}
+                            className={`w-full flex items-center justify-between px-2.5 py-2 text-left transition-colors group relative border-2 ${
+                              isActive
+                                ? 'bg-[#a6ff70] text-black border-black shadow-[2px_2px_0px_#000000] font-bold'
+                                : 'bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 border-transparent hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white shadow-none hover:shadow-[1.5px_1.5px_0px_#000000]'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2 min-w-0 pr-1">
+                              <Icon
+                                className={`w-3.5 h-3.5 shrink-0 stroke-[2.2] ${
+                                  isActive
+                                    ? 'text-black'
+                                    : 'text-slate-500 group-hover:text-black dark:text-zinc-400 dark:group-hover:text-white'
+                                }`}
+                              />
+                              <span className="truncate leading-snug">{item.title}</span>
+                            </div>
+                          </motion.button>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </nav>
 
-        {/* Sidebar Footer */}
-        <div className="p-3 border-t border-slate-100 dark:border-zinc-800 text-[11px] text-slate-400 dark:text-zinc-500 flex items-center justify-between">
-          <span className="font-medium">{totalLessons} Lessons Available</span>
-          <span className="font-mono text-[10px] bg-slate-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded">
+        {/* Neo-Brutalist Sidebar Footer */}
+        <div className="p-3 border-t-2 border-black dark:border-white bg-[#f4f3ee] dark:bg-zinc-900 text-[11px] text-black dark:text-zinc-300 flex items-center justify-between font-mono">
+          <div className="flex items-center gap-1.5 font-bold">
+            <span className="w-2 h-2 bg-[#a6ff70] border border-black inline-block" />
+            <span>{totalLessons} LESSONS</span>
+          </div>
+          <span className="text-[10px] font-bold bg-white dark:bg-zinc-800 px-1.5 py-0.5 border border-black dark:border-zinc-700 text-black dark:text-white shadow-[1px_1px_0px_#000000]">
             v1.0.0
           </span>
         </div>

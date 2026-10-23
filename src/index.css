@@ -12,7 +12,70 @@
 
   body {
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-color: #f7f6f1;
+    background-image: radial-gradient(#d5d2c8 1.15px, transparent 1.15px);
+    background-size: 18px 18px;
+    background-attachment: fixed;
+    color: #000000;
   }
+
+  .dark body {
+    background-color: #0e0f12;
+    background-image: radial-gradient(#27272a 1.15px, transparent 1.15px);
+    background-size: 18px 18px;
+    background-attachment: fixed;
+    color: #f4f4f5;
+  }
+}
+
+/* Neo-Brutalist Dot Grid Texture */
+.neo-grid-bg {
+  background-color: #f7f6f1;
+  background-image: radial-gradient(#d5d2c8 1.15px, transparent 1.15px);
+  background-size: 18px 18px;
+}
+
+.dark .neo-grid-bg {
+  background-color: #0e0f12;
+  background-image: radial-gradient(#27272a 1.15px, transparent 1.15px);
+  background-size: 18px 18px;
+}
+
+/* Neo-Brutalist Card Utility Classes */
+.neo-box {
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+}
+
+.neo-box-sm {
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 2.5px 2.5px 0px #000000;
+}
+
+.neo-box-lg {
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 6px 6px 0px #000000;
+}
+
+.dark .neo-box {
+  background-color: #18181b;
+  border: 2px solid #ffffff;
+  box-shadow: 4px 4px 0px #ffffff;
+}
+
+.dark .neo-box-sm {
+  background-color: #18181b;
+  border: 2px solid #ffffff;
+  box-shadow: 2.5px 2.5px 0px #ffffff;
+}
+
+.dark .neo-box-lg {
+  background-color: #18181b;
+  border: 2px solid #ffffff;
+  box-shadow: 6px 6px 0px #ffffff;
 }
 
 /* Custom minimal scrollbar for sidebar and search modal */

@@ -697,19 +697,19 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-zinc-900/50 backdrop-blur-xs animate-in fade-in duration-150"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label="Search documentation"
     >
       <div
-        className="w-full max-w-xl rounded-xl bg-white dark:bg-zinc-950 border border-workbook-border dark:border-zinc-800 shadow-2xl overflow-hidden flex flex-col max-h-[75vh]"
+        className="w-full max-w-xl bg-white dark:bg-zinc-950 border-2 border-black dark:border-white shadow-[6px_6px_0px_#000000] dark:shadow-[6px_6px_0px_#ffffff] overflow-hidden flex flex-col max-h-[75vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="flex items-center px-4 py-3.5 border-b border-workbook-border dark:border-zinc-800 gap-3">
-          <Search className="w-5 h-5 text-slate-400 shrink-0" />
+        <div className="flex items-center px-4 py-3.5 border-b-2 border-black dark:border-zinc-800 gap-3 bg-[#fbfbf9] dark:bg-zinc-900">
+          <Search className="w-5 h-5 text-black dark:text-white stroke-[2.5] shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -720,42 +720,43 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
             }}
             onKeyDown={handleKeyDown}
             placeholder="Search chapters, steps, EC2, Nginx, port 80, SSH..."
-            className="flex-1 bg-transparent text-sm text-slate-900 dark:text-zinc-100 placeholder-slate-400 focus:outline-none"
+            className="flex-1 bg-transparent text-sm font-medium text-black dark:text-zinc-100 placeholder-slate-400 focus:outline-none"
           />
           {query && (
             <button
               type="button"
               onClick={() => setQuery('')}
-              className="text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 p-1"
+              className="text-black dark:text-zinc-200 hover:bg-slate-200 dark:hover:bg-zinc-800 p-1 border border-black dark:border-zinc-700"
               aria-label="Clear search input"
             >
-              <X className="w-4 h-4" />
+              <X className="w-4 h-4 stroke-[2.5]" />
             </button>
           )}
-          <span className="hidden sm:inline-block text-[10px] uppercase font-mono px-1.5 py-0.5 rounded border border-workbook-border dark:border-zinc-800 text-slate-400">
+          <span className="hidden sm:inline-block text-[10px] uppercase font-mono font-bold px-1.5 py-0.5 border border-black dark:border-zinc-700 bg-white dark:bg-zinc-800 text-black dark:text-white shadow-[1px_1px_0px_#000000]">
             esc
           </span>
         </div>
 
         {/* Results List */}
-        <div ref={resultsListRef} className="flex-1 overflow-y-auto p-2 custom-scrollbar">
+        <div ref={resultsListRef} className="flex-1 overflow-y-auto p-3 custom-scrollbar space-y-1.5">
           {!query.trim() ? (
-            <div className="py-12 text-center text-slate-400 dark:text-zinc-500 text-xs">
+            <div className="py-12 text-center text-slate-500 dark:text-zinc-400 text-xs font-mono">
               Type keywords to search across all lessons in Chapters 1 &amp; 2...
             </div>
           ) : results.length === 0 ? (
             <div className="py-12 text-center">
-              <p className="text-sm font-medium text-slate-700 dark:text-zinc-300">
+              <p className="text-sm font-bold text-black dark:text-white">
                 No matching results found
               </p>
-              <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">
+              <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1">
                 No workbook section matches &ldquo;{query}&rdquo;.
               </p>
             </div>
           ) : (
-            <div className="space-y-1">
-              <div className="px-2 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
-                {results.length} {results.length === 1 ? 'match' : 'matches'} found
+            <div className="space-y-1.5">
+              <div className="px-2 py-1 text-[11px] font-mono font-bold uppercase tracking-wider text-black dark:text-white flex items-center justify-between">
+                <span>{results.length} {results.length === 1 ? 'match' : 'matches'} found</span>
+                <span className="text-[10px] bg-[#a6ff70] text-black px-1.5 py-0.2 border border-black">RESULTS</span>
               </div>
               {results.map((item, idx) => {
                 const isSelected = idx === selectedIndex;
@@ -765,26 +766,26 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
                     type="button"
                     onClick={() => handleSelect(item)}
                     onMouseEnter={() => setSelectedIndex(idx)}
-                    className={`w-full text-left p-2.5 rounded-lg transition-colors flex items-start gap-3 ${
+                    className={`w-full text-left p-3 transition-all flex items-start gap-3 border-2 ${
                       isSelected
-                        ? 'bg-slate-100 dark:bg-zinc-800 text-slate-900 dark:text-zinc-100'
-                        : 'text-slate-700 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-900/50'
+                        ? 'bg-[#a6ff70] text-black border-black shadow-[2.5px_2.5px_0px_#000000]'
+                        : 'bg-white dark:bg-zinc-900 text-slate-800 dark:text-zinc-300 border-black/20 hover:border-black hover:bg-[#f4f3ee] dark:hover:bg-zinc-800'
                     }`}
                   >
-                    <div className="p-1.5 rounded bg-slate-200/60 dark:bg-zinc-800 text-slate-500 dark:text-zinc-400 shrink-0 mt-0.5">
-                      <Hash className="w-3.5 h-3.5" />
+                    <div className="p-1 border border-black bg-white dark:bg-zinc-800 text-black dark:text-white shrink-0 mt-0.5">
+                      <Hash className="w-3.5 h-3.5 stroke-[2.5]" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-[10px] font-mono text-workbook-orange font-semibold uppercase tracking-wider mb-0.5">
+                      <div className="text-[10px] font-mono font-bold uppercase tracking-wider mb-0.5 text-black dark:text-white/80">
                         {item.pageTitle}
                       </div>
-                      <div className="flex items-center justify-between text-xs font-bold text-workbook-navy dark:text-zinc-100">
+                      <div className="flex items-center justify-between text-xs font-black text-black dark:text-white">
                         <span className="truncate">{highlightMatch(item.heading, query.trim())}</span>
                         {isSelected && (
-                          <CornerDownLeft className="w-3.5 h-3.5 text-slate-400 shrink-0 ml-2" />
+                          <CornerDownLeft className="w-3.5 h-3.5 text-black shrink-0 ml-2 stroke-[2.5]" />
                         )}
                       </div>
-                      <p className="text-xs text-slate-500 dark:text-zinc-400 line-clamp-2 mt-1 leading-relaxed">
+                      <p className="text-xs text-slate-600 dark:text-zinc-400 line-clamp-2 mt-1 leading-relaxed">
                         {highlightMatch(item.text, query.trim())}
                       </p>
                     </div>
@@ -796,17 +797,17 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
         </div>
 
         {/* Modal Footer */}
-        <div className="px-4 py-2 border-t border-workbook-border dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 text-[11px] text-slate-400 dark:text-zinc-500 flex items-center justify-between">
+        <div className="px-4 py-2 border-t-2 border-black dark:border-zinc-800 bg-[#f4f3ee] dark:bg-zinc-900 text-[11px] font-mono text-black dark:text-zinc-400 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span>
-              <kbd className="font-mono bg-slate-200 dark:bg-zinc-800 px-1 rounded text-[10px]">↑</kbd>{' '}
-              <kbd className="font-mono bg-slate-200 dark:bg-zinc-800 px-1 rounded text-[10px]">↓</kbd> navigate
+              <kbd className="font-mono font-bold bg-white dark:bg-zinc-800 border border-black px-1 text-[10px]">↑</kbd>{' '}
+              <kbd className="font-mono font-bold bg-white dark:bg-zinc-800 border border-black px-1 text-[10px]">↓</kbd> navigate
             </span>
             <span>
-              <kbd className="font-mono bg-slate-200 dark:bg-zinc-800 px-1 rounded text-[10px]">↵</kbd> select
+              <kbd className="font-mono font-bold bg-white dark:bg-zinc-800 border border-black px-1 text-[10px]">↵</kbd> select
             </span>
           </div>
-          <span>AWS Cloud Launchpad</span>
+          <span className="font-bold">AWS Cloud Launchpad</span>
         </div>
       </div>
     </div>

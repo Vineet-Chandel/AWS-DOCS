@@ -95,38 +95,38 @@ export const TROUBLESHOOTING_ENTRIES = [
 
 export function TroubleshootingTable() {
   return (
-    <div className="overflow-x-auto rounded-xl border border-workbook-border dark:border-zinc-800 shadow-2xs my-6">
+    <div className="overflow-x-auto border-2 border-black dark:border-white shadow-[5px_5px_0px_#000000] dark:shadow-[5px_5px_0px_#ffffff] bg-white dark:bg-zinc-900 my-8">
       <table className="w-full text-left text-xs border-collapse min-w-[640px]">
         <thead>
-          <tr className="bg-workbook-navy text-white dark:bg-zinc-900 border-b border-workbook-border dark:border-zinc-800 select-none">
-            <th className="py-3 px-4 font-mono font-bold uppercase tracking-wider text-[11px] w-[26%]">
+          <tr className="bg-black text-white dark:bg-white dark:text-black border-b-2 border-black dark:border-zinc-800 select-none">
+            <th className="py-3.5 px-4 font-mono font-bold uppercase tracking-wider text-[11px] w-[26%]">
               SYMPTOM
             </th>
-            <th className="py-3 px-4 font-mono font-bold uppercase tracking-wider text-[11px] w-[34%]">
+            <th className="py-3.5 px-4 font-mono font-bold uppercase tracking-wider text-[11px] w-[34%]">
               POSSIBLE CAUSE
             </th>
-            <th className="py-3 px-4 font-mono font-bold uppercase tracking-wider text-[11px] w-[40%]">
+            <th className="py-3.5 px-4 font-mono font-bold uppercase tracking-wider text-[11px] w-[40%]">
               WHAT TO TRY
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-workbook-border dark:divide-zinc-800">
+        <tbody className="divide-y-2 divide-black/10 dark:divide-zinc-800">
           {TROUBLESHOOTING_ENTRIES.map((entry, idx) => (
             <tr
               key={idx}
               className={`transition-colors ${
                 idx % 2 === 0
                   ? 'bg-white dark:bg-zinc-950/40'
-                  : 'bg-slate-50/70 dark:bg-zinc-900/30'
-              } hover:bg-blue-50/40 dark:hover:bg-zinc-800/40`}
+                  : 'bg-[#fbfbf9] dark:bg-zinc-900/30'
+              } hover:bg-[#a6ff70]/10`}
             >
-              <td className="py-3.5 px-4 align-top font-bold text-workbook-navy dark:text-zinc-100">
+              <td className="py-3.5 px-4 align-top font-black text-black dark:text-zinc-100 font-mono text-[11px]">
                 {entry.symptom}
               </td>
-              <td className="py-3.5 px-4 align-top text-slate-700 dark:text-zinc-300 leading-relaxed">
+              <td className="py-3.5 px-4 align-top text-slate-800 dark:text-zinc-300 leading-relaxed font-sans">
                 {entry.cause}
               </td>
-              <td className="py-3.5 px-4 align-top text-slate-700 dark:text-zinc-300 leading-relaxed">
+              <td className="py-3.5 px-4 align-top text-slate-800 dark:text-zinc-300 leading-relaxed font-sans">
                 {entry.solution}
               </td>
             </tr>

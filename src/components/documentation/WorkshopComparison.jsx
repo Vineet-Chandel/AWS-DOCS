@@ -1,8 +1,9 @@
 import React from 'react';
 import { Check, X, Info } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 /**
- * Two-column comparison clarifying what the workshop uses and what it does not need.
+ * Neo-Brutalist two-column comparison clarifying what the workshop uses and doesn't.
  */
 export function WorkshopComparison() {
   const whatWeUse = [
@@ -22,62 +23,70 @@ export function WorkshopComparison() {
 
   return (
     <div className="my-8">
-      <h3 id="what-this-workshop-uses" className="text-xl sm:text-2xl font-bold tracking-tight text-navy-900 dark:text-zinc-100 mb-3 scroll-mt-20">
+      <h3 id="what-this-workshop-uses" className="text-xl sm:text-2xl font-black text-black dark:text-white mb-3 scroll-mt-20">
         What This Workshop Uses — and What It Doesn&apos;t
       </h3>
-      <p className="text-sm sm:text-base text-slate-700 dark:text-zinc-300 leading-relaxed mb-6">
+      <p className="text-sm sm:text-base text-slate-800 dark:text-zinc-300 leading-relaxed mb-6 font-sans">
         Keeping your mental model clean is critical when learning the cloud. Because we are deploying a static website, our server requirements are intentionally lean:
       </p>
 
       {/* 2-Column Comparison Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         {/* What We Use */}
-        <div className="rounded-xl border border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/20 dark:bg-emerald-950/10 p-5 shadow-xs">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="p-1 rounded-full bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-400">
-              <Check className="w-3.5 h-3.5 stroke-[3]" />
+        <motion.div
+          whileHover={{ x: -1, y: -1 }}
+          className="border-2 border-black dark:border-white bg-[#a6ff70]/20 dark:bg-[#a6ff70]/10 p-5 sm:p-6 shadow-[5px_5px_0px_#000000] dark:shadow-[5px_5px_0px_#ffffff]"
+        >
+          <div className="flex items-center gap-2 mb-4 pb-2 border-b-2 border-black">
+            <span className="p-1 bg-[#a6ff70] border border-black text-black">
+              <Check className="w-4 h-4 stroke-[3]" />
             </span>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 font-mono">
-              What We Use
+            <h4 className="text-xs font-bold uppercase tracking-wider text-black dark:text-white font-mono bg-[#a6ff70] px-2 py-0.5 border border-black">
+              WHAT WE USE
             </h4>
           </div>
-          <ul className="space-y-2.5 text-xs sm:text-sm text-slate-800 dark:text-zinc-200">
+          <ul className="space-y-3 text-xs sm:text-sm text-black dark:text-zinc-200 font-medium">
             {whatWeUse.map((item, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className="text-emerald-500 font-bold shrink-0 mt-0.5">•</span>
-                <span>{item}</span>
+              <li key={i} className="flex items-start gap-2.5">
+                <span className="w-1.5 h-1.5 bg-black dark:bg-[#a6ff70] border border-black rounded-full shrink-0 mt-1.5" />
+                <span className="leading-snug">{item}</span>
               </li>
             ))}
           </ul>
-        </div>
+        </motion.div>
 
         {/* What We Don't Need */}
-        <div className="rounded-xl border border-slate-200 dark:border-zinc-800 bg-slate-50/60 dark:bg-zinc-900/40 p-5 shadow-xs">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="p-1 rounded-full bg-slate-200 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400">
-              <X className="w-3.5 h-3.5 stroke-[3]" />
+        <motion.div
+          whileHover={{ x: -1, y: -1 }}
+          className="border-2 border-black dark:border-white bg-[#fbfbf9] dark:bg-zinc-900 p-5 sm:p-6 shadow-[5px_5px_0px_#000000] dark:shadow-[5px_5px_0px_#ffffff]"
+        >
+          <div className="flex items-center gap-2 mb-4 pb-2 border-b-2 border-black">
+            <span className="p-1 bg-[#fda4af] border border-black text-black">
+              <X className="w-4 h-4 stroke-[3]" />
             </span>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400 font-mono">
-              What We Don&apos;t Need For This Exercise
+            <h4 className="text-xs font-bold uppercase tracking-wider text-black dark:text-white font-mono bg-[#fda4af] px-2 py-0.5 border border-black">
+              WHAT WE DON&apos;T NEED
             </h4>
           </div>
-          <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
+          <ul className="space-y-3 text-xs sm:text-sm text-slate-700 dark:text-zinc-300 font-medium">
             {whatWeDontNeed.map((item, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className="text-slate-400 font-bold shrink-0 mt-0.5">•</span>
-                <span>{item}</span>
+              <li key={i} className="flex items-start gap-2.5">
+                <span className="w-1.5 h-1.5 bg-[#fda4af] border border-black rounded-full shrink-0 mt-1.5" />
+                <span className="leading-snug">{item}</span>
               </li>
             ))}
           </ul>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Clarification Callout */}
-      <div className="rounded-lg border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 text-xs sm:text-sm text-slate-600 dark:text-zinc-400 flex items-start gap-3">
-        <Info className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-        <div>
-          <strong className="text-slate-900 dark:text-zinc-100">Important distinction:</strong> A static website may still contain rich client-side JavaScript that executes inside the visitor&apos;s browser. However, the EC2 server does not execute a background Node.js or Python runtime; Nginx simply reads files from disk and transfers them over HTTP.
-        </div>
+      {/* Static Note */}
+      <div className="p-3 bg-white dark:bg-zinc-900 border-2 border-black dark:border-white text-xs text-slate-800 dark:text-zinc-200 shadow-[3px_3px_0px_#000000] flex items-center gap-2.5">
+        <span className="px-1.5 py-0.5 bg-[#fde047] text-black border border-black font-mono font-bold text-[10px]">
+          TIP
+        </span>
+        <p className="leading-relaxed">
+          Static files (HTML, CSS, JS, images) are served directly off the EC2 disk by Nginx — no running backend framework required.
+        </p>
       </div>
     </div>
   );

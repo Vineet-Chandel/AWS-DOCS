@@ -1,9 +1,9 @@
 import React from 'react';
 import { ArrowRight, ArrowDown, GitBranch, Server, Cpu, Globe } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 /**
- * 4-stage deployment pipeline from repository to live website.
- * Faithful reproduction of Reference Image 1 with responsive desktop/mobile layouts.
+ * 4-stage deployment pipeline transformed into Neo-Brutalist cards.
  */
 export function DeploymentFlow() {
   const stages = [
@@ -13,11 +13,7 @@ export function DeploymentFlow() {
       title: 'GitHub repository',
       subtitle: 'index.html + assets',
       icon: GitBranch,
-      color: {
-        border: 'border-blue-500 dark:border-blue-500',
-        bg: 'bg-blue-50/30 dark:bg-blue-950/20',
-        badge: 'text-blue-600 dark:text-blue-400',
-      },
+      badgeBg: 'bg-[#67e8f9]',
     },
     {
       num: '02',
@@ -25,11 +21,7 @@ export function DeploymentFlow() {
       title: 'Amazon EC2',
       subtitle: 'Amazon Linux 2023',
       icon: Server,
-      color: {
-        border: 'border-amber-500 dark:border-amber-500',
-        bg: 'bg-amber-50/30 dark:bg-amber-950/20',
-        badge: 'text-amber-600 dark:text-amber-400',
-      },
+      badgeBg: 'bg-[#fde047]',
     },
     {
       num: '03',
@@ -37,11 +29,7 @@ export function DeploymentFlow() {
       title: 'Nginx',
       subtitle: 'Serves files on port 80',
       icon: Cpu,
-      color: {
-        border: 'border-indigo-500 dark:border-indigo-400',
-        bg: 'bg-indigo-50/30 dark:bg-indigo-950/20',
-        badge: 'text-indigo-600 dark:text-indigo-400',
-      },
+      badgeBg: 'bg-[#fb923c]',
     },
     {
       num: '04',
@@ -49,88 +37,50 @@ export function DeploymentFlow() {
       title: 'Browser + public IP',
       subtitle: 'http://YOUR_PUBLIC_IP',
       icon: Globe,
-      color: {
-        border: 'border-emerald-500 dark:border-emerald-500',
-        bg: 'bg-emerald-50/30 dark:bg-emerald-950/20',
-        badge: 'text-emerald-600 dark:text-emerald-400',
-      },
+      badgeBg: 'bg-[#a6ff70]',
     },
   ];
 
   return (
     <div className="my-8">
-      {/* Section Eyebrow */}
-      <div className="text-xs font-bold tracking-wider uppercase text-slate-800 dark:text-slate-200 mb-4 select-none">
-        From Repository to Live Website
-      </div>
-
-      {/* 4-Stage Horizontal (Desktop) / Vertical (Mobile) Flow */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-center relative">
-        {stages.map((stage, idx) => {
-          const isLast = idx === stages.length - 1;
+      {/* Desktop Horizontal Pipeline / Mobile Vertical Stack */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+        {stages.map((stage, index) => {
           const Icon = stage.icon;
-
           return (
-            <React.Fragment key={stage.num}>
-              {/* Stage Card */}
-              <div
-                className={`relative flex flex-col justify-between p-4 rounded-xl border-2 ${stage.color.border} ${stage.color.bg} bg-white dark:bg-zinc-900/80 shadow-xs min-h-[110px] transition-transform hover:-translate-y-0.5`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className={`text-[11px] font-bold tracking-wider font-mono uppercase ${stage.color.badge}`}>
-                    {stage.num} {stage.tag}
+            <motion.div
+              key={stage.num}
+              whileHover={{ x: -2, y: -2 }}
+              className="relative p-5 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-[5px_5px_0px_#000000] dark:shadow-[5px_5px_0px_#ffffff] flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3 pb-2 border-b border-black/20">
+                  <span className={`text-[10px] font-mono font-bold tracking-wider uppercase px-2 py-0.5 border border-black text-black ${stage.badgeBg}`}>
+                    {stage.num} • {stage.tag}
                   </span>
-                  <Icon className={`w-3.5 h-3.5 ${stage.color.badge} opacity-80`} />
+                  <div className="p-1 border border-black bg-[#fbfbf9] text-black">
+                    <Icon className="w-4 h-4 stroke-[2.5]" />
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-bold text-navy-900 dark:text-zinc-100 tracking-tight leading-snug">
-                    {stage.title}
-                  </h4>
-                  <p className="text-xs text-slate-500 dark:text-zinc-400 font-mono mt-0.5">
-                    {stage.subtitle}
-                  </p>
-                </div>
+
+                <h4 className="text-sm font-black text-black dark:text-white mb-1">
+                  {stage.title}
+                </h4>
+                <p className="text-xs font-mono text-slate-600 dark:text-zinc-400">
+                  {stage.subtitle}
+                </p>
               </div>
 
-              {/* Arrow connector between steps (desktop: horizontal; mobile: downward) */}
-              {!isLast && (
-                <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 pointer-events-none z-10"
-                     style={{ left: `calc(${(idx + 1) * 25}% - 12px)` }}>
-                  <ArrowRight className="w-5 h-5 text-slate-400 dark:text-zinc-600" />
-                </div>
-              )}
-              {!isLast && (
-                <div className="flex md:hidden justify-center py-0.5">
-                  <ArrowDown className="w-4 h-4 text-slate-400 dark:text-zinc-600" />
-                </div>
-              )}
-            </React.Fragment>
+              {/* Connecting indicator badge */}
+              <div className="mt-4 pt-2 border-t border-black/10 flex items-center justify-between text-[11px] font-mono font-bold text-slate-500">
+                <span>STAGE 0{stage.num}</span>
+                {index < stages.length - 1 && (
+                  <span className="hidden md:inline text-black font-bold">→</span>
+                )}
+              </div>
+            </motion.div>
           );
         })}
-      </div>
-
-      {/* Network and Admin Paths */}
-      <div className="mt-4 pt-3 space-y-1.5 text-xs font-sans border-t border-slate-100 dark:border-zinc-800/80">
-        <div className="flex flex-wrap items-center gap-1.5 text-emerald-700 dark:text-emerald-400 font-medium">
-          <span className="font-bold">Network path:</span>
-          <span>Visitor</span>
-          <span>→</span>
-          <span>Security Group (HTTP :80)</span>
-          <span>→</span>
-          <span>EC2</span>
-          <span>→</span>
-          <span>Nginx</span>
-          <span>→</span>
-          <span>website files</span>
-        </div>
-        <div className="flex flex-wrap items-center gap-1.5 text-slate-500 dark:text-zinc-400 text-[11px]">
-          <span className="font-semibold text-slate-600 dark:text-zinc-300">Administrator path:</span>
-          <span>Your computer</span>
-          <span>→</span>
-          <span>SSH (port 22, restricted to your IP)</span>
-          <span>→</span>
-          <span>EC2 terminal</span>
-        </div>
       </div>
     </div>
   );

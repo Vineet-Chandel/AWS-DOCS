@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Bookmark } from 'lucide-react';
 
 /**
- * Sticky right-sidebar "On this page" table of contents following Reference Image 2.
- * Dynamically queries headings or takes provided headings, highlights active heading on scroll.
+ * Neo-Brutalist sticky "On this page" Table of Contents.
+ * Styled with 2px solid black border, hard offset drop shadow, and lime-green active markers.
  */
 export function RightTableOfContents({ headings = [] }) {
   const [activeId, setActiveId] = useState('');
@@ -11,7 +12,7 @@ export function RightTableOfContents({ headings = [] }) {
     if (!headings || headings.length === 0) return;
 
     const handleScroll = () => {
-      const scrollPos = window.scrollY + 120; // Offset for header
+      const scrollPos = window.scrollY + 120;
       const elements = headings
         .map((h) => document.getElementById(h.id))
         .filter(Boolean);
@@ -29,7 +30,6 @@ export function RightTableOfContents({ headings = [] }) {
         }
       }
 
-      // If at bottom of page, activate last item
       if (
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 50
@@ -68,13 +68,18 @@ export function RightTableOfContents({ headings = [] }) {
   return (
     <aside
       aria-label="Table of contents for this page"
-      className="hidden xl:block w-56 shrink-0 sticky top-20 self-start max-h-[calc(100vh-6rem)] overflow-y-auto pl-4 py-2 text-xs custom-scrollbar"
+      className="hidden xl:block w-56 2xl:w-64 shrink-0 sticky top-20 self-start max-h-[calc(100vh-6rem)] overflow-y-auto mr-4 2xl:mr-8 text-xs custom-scrollbar"
     >
-      <div className="font-semibold text-slate-900 dark:text-zinc-100 uppercase tracking-wider text-[11px] mb-3 select-none">
-        On this page
-      </div>
+      <div className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-white shadow-[4px_4px_0px_#000000] dark:shadow-[4px_4px_0px_#ffffff] p-4">
+        {/* Header Eyebrow */}
+        <div className="flex items-center gap-2 pb-2.5 mb-3 border-b-2 border-black dark:border-zinc-800">
+          <Bookmark className="w-3.5 h-3.5 stroke-[2.5] text-black dark:text-white" />
+          <span className="font-mono font-bold text-black dark:text-white uppercase tracking-wider text-[11px] select-none">
+            ON THIS PAGE
+          </span>
+        </div>
 
-      <div className="relative border-l border-slate-200 dark:border-zinc-800">
+        {/* Headings List */}
         <nav className="space-y-1">
           {headings.map((item) => {
             const isActive = activeId === item.id;
@@ -85,22 +90,15 @@ export function RightTableOfContents({ headings = [] }) {
                 key={item.id}
                 href={`#${item.id}`}
                 onClick={(e) => handleClick(e, item.id)}
-                className={`group relative flex items-center py-1 transition-all leading-snug ${
-                  isH3 ? 'pl-5 text-[11px]' : 'pl-3'
+                className={`block transition-all leading-snug py-1 px-2 border ${
+                  isH3 ? 'ml-2 text-[11px]' : 'text-xs'
                 } ${
                   isActive
-                    ? 'font-semibold text-blue-600 dark:text-blue-400'
-                    : 'text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-200'
+                    ? 'bg-[#a6ff70] text-black border-black font-bold shadow-[2px_2px_0px_#000000]'
+                    : 'text-slate-700 dark:text-zinc-300 border-transparent hover:border-black dark:hover:border-zinc-400 hover:bg-[#f4f3ee] dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white'
                 }`}
               >
-                {/* Active Indicator Bar on the left border */}
-                {isActive && (
-                  <span
-                    className="absolute -left-[1.5px] top-1 bottom-1 w-[2px] bg-blue-600 dark:bg-blue-400 rounded-full"
-                    aria-hidden="true"
-                  />
-                )}
-                <span className="truncate">{item.text}</span>
+                <span className="truncate block">{item.text}</span>
               </a>
             );
           })}
