@@ -78,6 +78,58 @@
   box-shadow: 6px 6px 0px #ffffff;
 }
 
+/* Neo-Brutalist Universal Callouts, Cards & Containers Transformation */
+[class*="border-l-4"] {
+  border-left-width: 5px !important;
+  border-top-width: 2px !important;
+  border-right-width: 2px !important;
+  border-bottom-width: 2px !important;
+  border-color: #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  border-radius: 0px !important;
+}
+
+.dark [class*="border-l-4"] {
+  border-color: #ffffff !important;
+  box-shadow: 4px 4px 0px #ffffff !important;
+}
+
+[class*="rounded-xl"][class*="border-workbook-border"],
+[class*="rounded-2xl"][class*="border-workbook-border"],
+[class*="rounded-xl"][class*="border-slate-200"],
+[class*="rounded-2xl"][class*="border-slate-200"],
+[class*="rounded-xl"][class*="border-slate-300"],
+[class*="rounded-2xl"][class*="border-slate-300"],
+[class*="overflow-x-auto"][class*="rounded-xl"] {
+  border: 2px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  border-radius: 0px !important;
+}
+
+.dark [class*="rounded-xl"][class*="border-workbook-border"],
+.dark [class*="rounded-2xl"][class*="border-workbook-border"],
+.dark [class*="rounded-xl"][class*="border-slate-200"],
+.dark [class*="rounded-2xl"][class*="border-slate-200"],
+.dark [class*="rounded-xl"][class*="border-slate-300"],
+.dark [class*="rounded-2xl"][class*="border-slate-300"],
+.dark [class*="overflow-x-auto"][class*="rounded-xl"] {
+  border: 2px solid #ffffff !important;
+  box-shadow: 4px 4px 0px #ffffff !important;
+}
+
+/* Neo-Brutalist Badges */
+.neo-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1.5px solid #000000;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.6875rem;
+  line-height: 1rem;
+}
+
 /* Custom minimal scrollbar for sidebar and search modal */
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
