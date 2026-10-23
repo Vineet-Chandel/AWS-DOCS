@@ -35,6 +35,9 @@ import { IndependentChecklistPage, INDEPENDENT_CHECKLIST_HEADINGS } from './page
 // Chapter 6 Pages
 import { SecurityAndPermissionsPage, SECURITY_PAGE_HEADINGS } from './pages/SecurityAndPermissionsPage';
 
+// Chapter 7 Pages
+import { CostAwarenessAndCleanupPage, COST_AND_CLEANUP_HEADINGS } from './pages/CostAwarenessAndCleanupPage';
+
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { useTheme } from './hooks/useTheme';
 
@@ -54,6 +57,7 @@ const VALID_PAGES = [
   'challenge-project-two',
   'challenge-checklist',
   'security-and-permissions',
+  'cost-and-cleanup',
 ];
 
 export function App() {
@@ -192,6 +196,13 @@ export function App() {
         return {
           pageComponent: <SecurityAndPermissionsPage onNavigate={handleNavigate} />,
           currentHeadings: SECURITY_PAGE_HEADINGS,
+        };
+
+      // Chapter 7: Cost Awareness and Resource Cleanup
+      case 'cost-and-cleanup':
+        return {
+          pageComponent: <CostAwarenessAndCleanupPage onNavigate={handleNavigate} />,
+          currentHeadings: COST_AND_CLEANUP_HEADINGS,
         };
 
       default:

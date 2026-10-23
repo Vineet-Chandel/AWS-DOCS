@@ -415,9 +415,9 @@ export function SecurityAndPermissionsPage({ onNavigate = () => {} }) {
           pageLabel: 'Chapter 05 • Page 2',
         }}
         next={{
-          id: 'overview',
-          title: 'Workshop Overview',
-          pageLabel: 'Return to Start',
+          id: 'cost-and-cleanup',
+          title: 'Finish the lab without surprise charges',
+          pageLabel: 'Chapter 07',
         }}
         onNavigate={onNavigate}
       />

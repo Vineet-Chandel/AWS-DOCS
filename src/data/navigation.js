@@ -174,4 +174,18 @@ export const WORKBOOK_SECTIONS = [
       },
     ],
   },
+  {
+    title: '07 / COST AWARENESS AND RESOURCE CLEANUP',
+    items: [
+      {
+        id: 'cost-and-cleanup',
+        title: 'Finish the lab without surprise charges',
+        status: 'ready',
+        chapter: '07',
+        pageNumber: 1,
+        description: 'Before deployment pricing checklist, workshop cleanup steps, stopping vs terminating, and official budget links.',
+        icon: 'DollarSign',
+      },
+    ],
+  },
 ];

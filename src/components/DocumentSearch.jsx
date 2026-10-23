@@ -503,6 +503,43 @@ const SEARCHABLE_TOPICS = [
     slug: 'before-you-finish-the-lab',
     text: 'Lab safety check: correct workshop account used, no secrets committed or uploaded to web root, SSH restricted to My IP, temporary resources reviewed for cleanup.',
   },
+
+  // CHAPTER 7 - COST AWARENESS AND RESOURCE CLEANUP
+  {
+    pageId: 'cost-and-cleanup',
+    pageTitle: '07 • Cost Awareness and Resource Cleanup: Finish the lab without surprise charges',
+    heading: 'Before Deployment',
+    slug: 'before-deployment',
+    text: 'Cost checklist before launching: instance type compute cost, EBS storage and public IPv4 charges, Free Tier eligibility, budget alert setup, shared training account naming rules.',
+  },
+  {
+    pageId: 'cost-and-cleanup',
+    pageTitle: '07 • Cost Awareness and Resource Cleanup: Finish the lab without surprise charges',
+    heading: 'Cleanup After the Workshop',
+    slug: 'cleanup-after-the-workshop',
+    text: 'Workshop cleanup steps: preserve URL/screenshot evidence, terminate EC2 instance, review retained EBS volumes, snapshots, Elastic IPs, confirm before deletion, inspect Billing console.',
+  },
+  {
+    pageId: 'cost-and-cleanup',
+    pageTitle: '07 • Cost Awareness and Resource Cleanup: Finish the lab without surprise charges',
+    heading: 'Stopping Is Not the Same as Cleanup',
+    slug: 'stopping-is-not-the-same',
+    text: 'STOPPING != CLEANUP: Stopping an instance stops compute charges but retains EBS root volume and Elastic IP charges. Terminating permanently deletes the virtual machine.',
+  },
+  {
+    pageId: 'cost-and-cleanup',
+    pageTitle: '07 • Cost Awareness and Resource Cleanup: Finish the lab without surprise charges',
+    heading: 'Official AWS Resources',
+    slug: 'official-aws-resources',
+    text: 'Official AWS Cost Management links: Create an AWS budget to track spending, and Terminate an EC2 instance official cleanup documentation.',
+  },
+  {
+    pageId: 'cost-and-cleanup',
+    pageTitle: '07 • Cost Awareness and Resource Cleanup: Finish the lab without surprise charges',
+    heading: 'Before You Leave AWS',
+    slug: 'before-you-leave-aws',
+    text: 'Final departure checklist: required evidence saved, EC2 instance reviewed, cleanup approved and completed, associated resources reviewed, billing checked.',
+  },
 ];
 
 export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
