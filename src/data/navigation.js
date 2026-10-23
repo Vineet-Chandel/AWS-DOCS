@@ -1,9 +1,23 @@
 /**
  * Navigation structure for the AWS Cloud Launchpad — Deployment Workbook.
- * Only contains fully created and functional sections across Chapters 1 & 2.
+ * Only contains fully created and functional sections.
  */
 
 export const WORKBOOK_SECTIONS = [
+  {
+    title: 'INTRODUCTION',
+    items: [
+      {
+        id: 'overview',
+        title: 'Overview',
+        status: 'ready',
+        chapter: '00',
+        pageNumber: 1,
+        description: 'Deploy your first website to AWS — 2-hour workshop overview and architecture.',
+        icon: 'BookOpen',
+      },
+    ],
+  },
   {
     title: '01 / INTRODUCTION & PREREQUISITES',
     items: [
@@ -97,6 +111,52 @@ export const WORKBOOK_SECTIONS = [
         pageNumber: 1,
         description: 'Verify EC2 status, security groups, Nginx daemon, web files, and test public HTTP delivery.',
         icon: 'CheckCircle2',
+      },
+    ],
+  },
+  {
+    title: '04 / TROUBLESHOOTING GUIDE',
+    items: [
+      {
+        id: 'troubleshoot-common-errors',
+        title: 'Common errors, likely causes and fixes',
+        status: 'ready',
+        chapter: '04',
+        pageNumber: 1,
+        description: 'Diagnostic matrix for 10 common SSH, networking, Nginx, and static file errors.',
+        icon: 'AlertTriangle',
+      },
+      {
+        id: 'troubleshoot-debugging-toolkit',
+        title: 'Your first debugging toolkit',
+        status: 'ready',
+        chapter: '04',
+        pageNumber: 2,
+        description: '8 diagnostic inspection commands, 2-branch debugging flowchart, and instructor activity.',
+        icon: 'Terminal',
+      },
+    ],
+  },
+  {
+    title: '05 / INDEPENDENT DEPLOYMENT CHALLENGE',
+    items: [
+      {
+        id: 'challenge-project-two',
+        title: 'Project 2: deploy a multi-page website',
+        status: 'ready',
+        chapter: '05',
+        pageNumber: 1,
+        description: 'Independent challenge to deploy Maryam-Skaik/static-website-demo to Amazon EC2.',
+        icon: 'Flame',
+      },
+      {
+        id: 'challenge-checklist',
+        title: 'Independent checklist — hints, not the complete solution',
+        status: 'ready',
+        chapter: '05',
+        pageNumber: 2,
+        description: '10-task milestone checklist, submission requirements, and 4-point mentor scoring rubric.',
+        icon: 'ListChecks',
       },
     ],
   },

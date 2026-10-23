@@ -667,6 +667,11 @@ curl -I http://YOUR_PUBLIC_IP`;
           title: 'Deploy the repository and open the live website',
           pageLabel: 'Chapter 02 • Page 4',
         }}
+        next={{
+          id: 'troubleshoot-common-errors',
+          title: 'Common errors, likely causes and fixes',
+          pageLabel: 'Chapter 04',
+        }}
         onNavigate={onNavigate}
       />
     </article>

@@ -26,8 +26,8 @@ export const INTRODUCTION_HEADINGS = [
 
 export function IntroductionPage({ onNavigate = () => {} }) {
   const breadcrumbItems = [
-    { id: 'overview', label: 'Introduction' },
-    { id: 'overview', label: 'Overview' },
+    { id: 'overview', label: 'AWS Cloud Launchpad' },
+    { id: 'overview', label: 'Workshop Overview' },
   ];
 
   return (

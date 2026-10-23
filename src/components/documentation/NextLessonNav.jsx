@@ -40,22 +40,22 @@ export function NextLessonNav({ onNavigate = () => {} }) {
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-5 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm hover:border-slate-300 dark:hover:border-zinc-700 transition-all group">
           <div>
             <div className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500 mb-1">
-              Next Lesson • Chapter 02
+              Next Chapter • Chapter 01
             </div>
             <div className="text-base font-bold text-navy-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-              Getting Started &amp; Prerequisites
+              Introduction &amp; Prerequisites
             </div>
             <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
-              Verify your AWS account, configure MFA, and inspect website project files.
+              Learn what AWS deployment means, inspect the EC2 architecture, and verify preflight tools.
             </p>
           </div>
 
           <button
             type="button"
-            onClick={() => onNavigate('prerequisites')}
+            onClick={() => onNavigate('intro-deployment')}
             className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-navy-900 text-white hover:bg-navy-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white font-medium text-sm transition-all shrink-0 shadow-xs focus:outline-none"
           >
-            <span>Start Prerequisites</span>
+            <span>Start Chapter 01</span>
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
