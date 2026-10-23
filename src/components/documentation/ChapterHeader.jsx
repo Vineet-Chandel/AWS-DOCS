@@ -22,8 +22,12 @@ export function ChapterHeader({
       {/* Chapter Indicator: 01 / INTRODUCTION & PREREQUISITES • 1 OF 4 */}
       <div className="flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-workbook-orange mb-3 select-none">
         <span>{chapterNumber} / {chapterTitle}</span>
-        <span>•</span>
-        <span>{pageNumber} OF {totalPages}</span>
+        {totalPages && totalPages > 1 && (
+          <>
+            <span>•</span>
+            <span>{pageNumber} OF {totalPages}</span>
+          </>
+        )}
       </div>
 
       {/* Main Title - Editorial Serif */}

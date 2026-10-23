@@ -160,4 +160,18 @@ export const WORKBOOK_SECTIONS = [
       },
     ],
   },
+  {
+    title: '06 / SECURITY AND PERMISSIONS',
+    items: [
+      {
+        id: 'security-and-permissions',
+        title: 'Build safe cloud habits from the beginning',
+        status: 'ready',
+        chapter: '06',
+        pageNumber: 1,
+        description: 'Six security principles, IAM vs security groups vs Linux permissions, shared responsibility, and safety checks.',
+        icon: 'ShieldCheck',
+      },
+    ],
+  },
 ];

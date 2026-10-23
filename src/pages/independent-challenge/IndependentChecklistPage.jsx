@@ -384,9 +384,9 @@ export function IndependentChecklistPage({ onNavigate = () => {} }) {
           pageLabel: 'Page 1 of 2',
         }}
         next={{
-          id: 'overview',
-          title: 'Workshop Overview',
-          pageLabel: 'Return to Start',
+          id: 'security-and-permissions',
+          title: 'Build safe cloud habits from the beginning',
+          pageLabel: 'Chapter 06',
         }}
         onNavigate={onNavigate}
       />

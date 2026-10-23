@@ -466,6 +466,43 @@ const SEARCHABLE_TOPICS = [
     slug: 'stretch-goal',
     text: 'Custom 404 error page configuration in Nginx: modify error_page directive, validate with nginx -t, and test missing routes.',
   },
+
+  // CHAPTER 6 - SECURITY AND PERMISSIONS
+  {
+    pageId: 'security-and-permissions',
+    pageTitle: '06 • Security and Permissions: Build safe cloud habits from the beginning',
+    heading: 'Six Essential Security Habits',
+    slug: 'six-essential-security-habits',
+    text: 'Six security principles: Use authorised accounts, Least privilege, Protect credentials, Use MFA, Limit network exposure, Protect project data.',
+  },
+  {
+    pageId: 'security-and-permissions',
+    pageTitle: '06 • Security and Permissions: Build safe cloud habits from the beginning',
+    heading: 'Permissions Are Not the Same as Network Rules',
+    slug: 'permissions-are-not-the-same',
+    text: 'Distinguish IAM identity/policy (AWS resource API control), Security group (network interface traffic filtering), and Linux file permissions (local filesystem read/write/execute).',
+  },
+  {
+    pageId: 'security-and-permissions',
+    pageTitle: '06 • Security and Permissions: Build safe cloud habits from the beginning',
+    heading: 'Shared Responsibility',
+    slug: 'shared-responsibility',
+    text: 'AWS Shared Responsibility Model: AWS secures the underlying cloud infrastructure; you secure accounts, permissions, deployed data, and exposed services.',
+  },
+  {
+    pageId: 'security-and-permissions',
+    pageTitle: '06 • Security and Permissions: Build safe cloud habits from the beginning',
+    heading: 'AWS Security Guidance',
+    slug: 'aws-security-guidance',
+    text: 'Authoritative links: AWS IAM security best practices, and EC2 security group rules reference.',
+  },
+  {
+    pageId: 'security-and-permissions',
+    pageTitle: '06 • Security and Permissions: Build safe cloud habits from the beginning',
+    heading: 'Before You Finish the Lab',
+    slug: 'before-you-finish-the-lab',
+    text: 'Lab safety check: correct workshop account used, no secrets committed or uploaded to web root, SSH restricted to My IP, temporary resources reviewed for cleanup.',
+  },
 ];
 
 export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {

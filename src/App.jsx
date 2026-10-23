@@ -32,6 +32,9 @@ import { DebuggingToolkitPage, DEBUGGING_TOOLKIT_HEADINGS } from './pages/troubl
 import { ProjectTwoPage, PROJECT_TWO_PAGE_HEADINGS } from './pages/independent-challenge/ProjectTwoPage';
 import { IndependentChecklistPage, INDEPENDENT_CHECKLIST_HEADINGS } from './pages/independent-challenge/IndependentChecklistPage';
 
+// Chapter 6 Pages
+import { SecurityAndPermissionsPage, SECURITY_PAGE_HEADINGS } from './pages/SecurityAndPermissionsPage';
+
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { useTheme } from './hooks/useTheme';
 
@@ -50,6 +53,7 @@ const VALID_PAGES = [
   'troubleshoot-debugging-toolkit',
   'challenge-project-two',
   'challenge-checklist',
+  'security-and-permissions',
 ];
 
 export function App() {
@@ -181,6 +185,13 @@ export function App() {
         return {
           pageComponent: <IndependentChecklistPage onNavigate={handleNavigate} />,
           currentHeadings: INDEPENDENT_CHECKLIST_HEADINGS,
+        };
+
+      // Chapter 6: Security and Permissions
+      case 'security-and-permissions':
+        return {
+          pageComponent: <SecurityAndPermissionsPage onNavigate={handleNavigate} />,
+          currentHeadings: SECURITY_PAGE_HEADINGS,
         };
 
       default:
