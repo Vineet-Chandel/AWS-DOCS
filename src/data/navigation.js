@@ -188,4 +188,18 @@ export const WORKBOOK_SECTIONS = [
       },
     ],
   },
+  {
+    title: '08 / FURTHER LEARNING RESOURCES',
+    items: [
+      {
+        id: 'further-learning',
+        title: 'Official AWS documentation to keep learning',
+        status: 'ready',
+        chapter: '08',
+        pageNumber: 1,
+        description: '13 curated official AWS User Guides, 3-stage learning progression, and next learning path.',
+        icon: 'Compass',
+      },
+    ],
+  },
 ];

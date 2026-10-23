@@ -486,9 +486,9 @@ export function CostAwarenessAndCleanupPage({ onNavigate = () => {} }) {
           pageLabel: 'Chapter 06',
         }}
         next={{
-          id: 'overview',
-          title: 'Workshop Overview',
-          pageLabel: 'Return to Start',
+          id: 'further-learning',
+          title: 'Official AWS documentation to keep learning',
+          pageLabel: 'Chapter 08',
         }}
         onNavigate={onNavigate}
       />

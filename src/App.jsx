@@ -38,6 +38,9 @@ import { SecurityAndPermissionsPage, SECURITY_PAGE_HEADINGS } from './pages/Secu
 // Chapter 7 Pages
 import { CostAwarenessAndCleanupPage, COST_AND_CLEANUP_HEADINGS } from './pages/CostAwarenessAndCleanupPage';
 
+// Chapter 8 Pages
+import { FurtherLearningResourcesPage, FURTHER_LEARNING_HEADINGS } from './pages/FurtherLearningResourcesPage';
+
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { useTheme } from './hooks/useTheme';
 
@@ -58,6 +61,7 @@ const VALID_PAGES = [
   'challenge-checklist',
   'security-and-permissions',
   'cost-and-cleanup',
+  'further-learning',
 ];
 
 export function App() {
@@ -203,6 +207,13 @@ export function App() {
         return {
           pageComponent: <CostAwarenessAndCleanupPage onNavigate={handleNavigate} />,
           currentHeadings: COST_AND_CLEANUP_HEADINGS,
+        };
+
+      // Chapter 8: Further Learning Resources
+      case 'further-learning':
+        return {
+          pageComponent: <FurtherLearningResourcesPage onNavigate={handleNavigate} />,
+          currentHeadings: FURTHER_LEARNING_HEADINGS,
         };
 
       default:

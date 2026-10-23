@@ -540,6 +540,29 @@ const SEARCHABLE_TOPICS = [
     slug: 'before-you-leave-aws',
     text: 'Final departure checklist: required evidence saved, EC2 instance reviewed, cleanup approved and completed, associated resources reviewed, billing checked.',
   },
+
+  // CHAPTER 8 - FURTHER LEARNING RESOURCES
+  {
+    pageId: 'further-learning',
+    pageTitle: '08 • Further Learning Resources: Official AWS documentation to keep learning',
+    heading: 'Official AWS Documentation Library',
+    slug: 'official-aws-documentation-library',
+    text: '13 official documentation guides: EC2 Get Started, SSH connect, Security group rules, Amazon Linux 2023 DNF, VPC, IAM best practices, AWS Budgets, S3 static hosting, RDS, Lambda, CloudWatch, Route 53, CloudFront HTTPS.',
+  },
+  {
+    pageId: 'further-learning',
+    pageTitle: '08 • Further Learning Resources: Official AWS documentation to keep learning',
+    heading: 'What Should I Learn Next?',
+    slug: 'what-should-i-learn-next',
+    text: 'Suggested three-stage learning progression: Stage 1 Strengthen the basics, Stage 2 Operate safely, Stage 3 Build beyond static hosting.',
+  },
+  {
+    pageId: 'further-learning',
+    pageTitle: '08 • Further Learning Resources: Official AWS documentation to keep learning',
+    heading: 'Next Learning Path',
+    slug: 'next-learning-path',
+    text: 'Next learning steps: HTTPS and custom domains, automated Git deployments, application logs and monitoring, backend hosting and databases.',
+  },
 ];
 
 export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
