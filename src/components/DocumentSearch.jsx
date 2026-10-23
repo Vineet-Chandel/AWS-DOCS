@@ -5,6 +5,22 @@ import { Search, X, Hash, CornerDownLeft } from 'lucide-react';
  * Searchable topics across all pages of Chapters 1 and 2.
  */
 const SEARCHABLE_TOPICS = [
+  // INTRODUCTION - OVERVIEW
+  {
+    pageId: 'overview',
+    pageTitle: 'Introduction: Deploy your first website to AWS',
+    heading: 'From Repository to Live Website',
+    slug: 'from-repository-to-live-website',
+    text: 'Overview pipeline: local computer -> GitHub repository -> Amazon EC2 (Amazon Linux 2023) -> Nginx -> Public IPv4 URL.',
+  },
+  {
+    pageId: 'overview',
+    pageTitle: 'Introduction: Deploy your first website to AWS',
+    heading: 'Three Steps to Your First Deployment',
+    slug: 'three-steps-to-your-first-deployment',
+    text: '120-minute launchpad roadmap: Understanding AWS infrastructure, Guided server deployment, and Verification checklist.',
+  },
+
   // CHAPTER 1 - PAGE 1
   {
     pageId: 'intro-deployment',
@@ -329,6 +345,126 @@ const SEARCHABLE_TOPICS = [
     heading: 'Ready for the Next Challenge?',
     slug: 'ready-for-the-next-challenge',
     text: 'Milestone completion: Cloud compute, VPC networking, firewall security, SSH authentication, Nginx web server, and production static site verification.',
+  },
+
+  // CHAPTER 4 - PAGE 1: COMMON ERRORS
+  {
+    pageId: 'troubleshoot-common-errors',
+    pageTitle: '04 • Page 1: Common errors, likely causes and fixes',
+    heading: 'Common Errors, Likely Causes and Fixes',
+    slug: 'common-errors-table',
+    text: 'Troubleshooting table: SSH connection times out, Permission denied (publickey), Website times out, Connection refused on port 80, Nginx welcome page appears, 403 Forbidden, 404 Not Found, CSS or images missing, git clone fails, 502 Bad Gateway.',
+  },
+  {
+    pageId: 'troubleshoot-common-errors',
+    pageTitle: '04 • Page 1: Common errors, likely causes and fixes',
+    heading: 'AWS Troubleshooting Note',
+    slug: 'aws-troubleshooting-note',
+    text: 'AWS official troubleshooting guide: Investigate specific error instead of opening network ports broadly to 0.0.0.0/0.',
+  },
+  {
+    pageId: 'troubleshoot-common-errors',
+    pageTitle: '04 • Page 1: Common errors, likely causes and fixes',
+    heading: 'EC2 Connection Troubleshooting',
+    slug: 'ec2-connection-troubleshooting',
+    text: 'Official AWS documentation for SSH connection failures, instance reachability alarms, and security group rules reference.',
+  },
+
+  // CHAPTER 4 - PAGE 2: DEBUGGING TOOLKIT
+  {
+    pageId: 'troubleshoot-debugging-toolkit',
+    pageTitle: '04 • Page 2: Your first debugging toolkit',
+    heading: 'Diagnostic Commands',
+    slug: 'diagnostic-commands',
+    text: 'Run on EC2: systemctl status nginx, systemctl start nginx, curl -I http://localhost, ls -la /usr/share/nginx/html, nginx -t, tail error.log. Run on laptop: curl -I http://YOUR_PUBLIC_IP.',
+  },
+  {
+    pageId: 'troubleshoot-debugging-toolkit',
+    pageTitle: '04 • Page 2: Your first debugging toolkit',
+    heading: 'Debug in Layers — Change One Thing at a Time',
+    slug: 'debug-in-layers',
+    text: 'Diagnostic flowchart: If curl -I http://localhost works, focus on networking and security groups. If localhost fails, focus on Nginx, logs, syntax, and files.',
+  },
+  {
+    pageId: 'troubleshoot-debugging-toolkit',
+    pageTitle: '04 • Page 2: Your first debugging toolkit',
+    heading: 'Instructor Mini-Activity: Find the Fault',
+    slug: 'instructor-mini-activity',
+    text: 'Controlled fault injection activity: 01 Observe, 02 Collect evidence, 03 Identify the layer, 04 Make one controlled fix, 05 Verify again.',
+  },
+  {
+    pageId: 'troubleshoot-debugging-toolkit',
+    pageTitle: '04 • Page 2: Your first debugging toolkit',
+    heading: 'Debugging Rule',
+    slug: 'debugging-rule',
+    text: 'If curl to localhost works but the public URL fails, focus on networking. If localhost fails too, focus on Nginx and server configuration.',
+  },
+  {
+    pageId: 'troubleshoot-debugging-toolkit',
+    pageTitle: '04 • Page 2: Your first debugging toolkit',
+    heading: 'Before Declaring the Issue Fixed',
+    slug: 'before-declaring-fixed',
+    text: 'Verification checklist: error understood, diagnostic command succeeds, browser renders site, assets load, security groups restricted, configuration restored.',
+  },
+
+  // CHAPTER 5 - PAGE 1: PROJECT 2 MULTI-PAGE
+  {
+    pageId: 'challenge-project-two',
+    pageTitle: '05 • Page 1: Project 2: deploy a multi-page website',
+    heading: 'Repository Link',
+    slug: 'repository-link',
+    text: 'Independent challenge repository: Maryam-Skaik/static-website-demo. Deploy multi-page static site to EC2.',
+  },
+  {
+    pageId: 'challenge-project-two',
+    pageTitle: '05 • Page 1: Project 2: deploy a multi-page website',
+    heading: 'Expected Source Structure',
+    slug: 'expected-source-structure',
+    text: 'Repository structure: index.html, about.html, 404.html, css/style.css, js/theme.js, README.md, LICENSE. Custom 404 serving behavior.',
+  },
+  {
+    pageId: 'challenge-project-two',
+    pageTitle: '05 • Page 1: Project 2: deploy a multi-page website',
+    heading: 'Expected Outcome',
+    slug: 'expected-outcome',
+    text: 'Four outcomes: Running EC2 (infrastructure), Public live URL (accessible), Multi-page content (functional), Custom 404 behaviour (stretch).',
+  },
+  {
+    pageId: 'challenge-project-two',
+    pageTitle: '05 • Page 1: Project 2: deploy a multi-page website',
+    heading: 'Challenge Rule',
+    slug: 'challenge-rule',
+    text: 'Diagnose issues independently before asking for help. Explain attempts, test commands, observed results, and hypotheses.',
+  },
+
+  // CHAPTER 5 - PAGE 2: INDEPENDENT CHECKLIST
+  {
+    pageId: 'challenge-checklist',
+    pageTitle: '05 • Page 2: Independent checklist — hints, not the complete solution',
+    heading: 'Independent Deployment Checklist',
+    slug: 'independent-checklist',
+    text: '10-task checklist: inspect repo, confirm AWS settings, connect SSH, install web server, deploy files, check assets, test public URL, test multi-page, capture evidence, clean up resources.',
+  },
+  {
+    pageId: 'challenge-checklist',
+    pageTitle: '05 • Page 2: Independent checklist — hints, not the complete solution',
+    heading: 'Submission Requirements',
+    slug: 'submission-requirements',
+    text: 'Submission deliverables: Live public URL, screenshot evidence with credentials obscured, reflection questions on debugging and cleanup.',
+  },
+  {
+    pageId: 'challenge-checklist',
+    pageTitle: '05 • Page 2: Independent checklist — hints, not the complete solution',
+    heading: 'Mentor Scoring Idea',
+    slug: 'mentor-scoring-idea',
+    text: '4-point mentor rubric: 1 Point Deploy, 1 Point Navigate, 1 Point Assets, 1 Point Understand.',
+  },
+  {
+    pageId: 'challenge-checklist',
+    pageTitle: '05 • Page 2: Independent checklist — hints, not the complete solution',
+    heading: 'Stretch Goal',
+    slug: 'stretch-goal',
+    text: 'Custom 404 error page configuration in Nginx: modify error_page directive, validate with nginx -t, and test missing routes.',
   },
 ];
 

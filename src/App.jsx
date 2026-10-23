@@ -6,6 +6,9 @@ import { ReadingProgress } from './components/ReadingProgress';
 import { DocumentSearch } from './components/DocumentSearch';
 import { BackToTop } from './components/BackToTop';
 
+// Introduction Overview Page
+import { IntroductionPage, INTRODUCTION_HEADINGS } from './pages/IntroductionPage';
+
 // Chapter 1 Pages
 import { DeploymentOverviewPage, PAGE_1_HEADINGS } from './pages/DeploymentOverviewPage';
 import { Ec2ArchitecturePage, PAGE_2_HEADINGS } from './pages/Ec2ArchitecturePage';
@@ -21,10 +24,19 @@ import { DeployAndVerifyPage, DEPLOY_PAGE_4_HEADINGS } from './pages/step-by-ste
 // Chapter 3 Pages
 import { VerificationChecklistPage, VERIFICATION_PAGE_HEADINGS } from './pages/VerificationChecklistPage';
 
+// Chapter 4 Pages
+import { CommonErrorsPage, COMMON_ERRORS_PAGE_HEADINGS } from './pages/troubleshooting/CommonErrorsPage';
+import { DebuggingToolkitPage, DEBUGGING_TOOLKIT_HEADINGS } from './pages/troubleshooting/DebuggingToolkitPage';
+
+// Chapter 5 Pages
+import { ProjectTwoPage, PROJECT_TWO_PAGE_HEADINGS } from './pages/independent-challenge/ProjectTwoPage';
+import { IndependentChecklistPage, INDEPENDENT_CHECKLIST_HEADINGS } from './pages/independent-challenge/IndependentChecklistPage';
+
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { useTheme } from './hooks/useTheme';
 
 const VALID_PAGES = [
+  'overview',
   'intro-deployment',
   'intro-ec2-architecture',
   'intro-aws-services',
@@ -34,24 +46,28 @@ const VALID_PAGES = [
   'deploy-connect-and-install',
   'deploy-and-verify',
   'verification-checklist',
+  'troubleshoot-common-errors',
+  'troubleshoot-debugging-toolkit',
+  'challenge-project-two',
+  'challenge-checklist',
 ];
 
 export function App() {
-  // Initialize page from URL hash if present, default to intro-deployment
+  // Initialize page from URL hash if present, default to overview
   const [activePage, setActivePage] = useState(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.replace(/^#\/?/, '');
       if (VALID_PAGES.includes(hash)) {
         return hash;
       }
-      if (hash === 'overview' || hash === '') {
-        return 'intro-deployment';
+      if (hash === '' || hash === 'overview') {
+        return 'overview';
       }
       if (hash) {
         return hash;
       }
     }
-    return 'intro-deployment';
+    return 'overview';
   });
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -64,8 +80,10 @@ export function App() {
     const handleHashChange = () => {
       const hash = window.location.hash.replace(/^#\/?/, '');
       if (hash && hash !== activePage && !hash.includes('-vs-') && !hash.includes('-in-')) {
-        if (VALID_PAGES.includes(hash) || hash === 'overview') {
-          setActivePage(hash === 'overview' ? 'intro-deployment' : hash);
+        if (VALID_PAGES.includes(hash)) {
+          setActivePage(hash);
+        } else if (hash === 'overview') {
+          setActivePage('overview');
         }
       }
     };
@@ -74,7 +92,7 @@ export function App() {
   }, [activePage]);
 
   const handleNavigate = (pageId) => {
-    const target = pageId === 'overview' ? 'intro-deployment' : pageId;
+    const target = pageId || 'overview';
     setActivePage(target);
     window.location.hash = target;
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -83,9 +101,15 @@ export function App() {
   // Determine which page component and headings to render
   const { pageComponent, currentHeadings } = useMemo(() => {
     switch (activePage) {
+      // Introduction: Workshop Overview
+      case 'overview':
+        return {
+          pageComponent: <IntroductionPage onNavigate={handleNavigate} />,
+          currentHeadings: INTRODUCTION_HEADINGS,
+        };
+
       // Chapter 1: Introduction & Prerequisites
       case 'intro-deployment':
-      case 'overview':
         return {
           pageComponent: <DeploymentOverviewPage onNavigate={handleNavigate} />,
           currentHeadings: PAGE_1_HEADINGS,
@@ -135,6 +159,30 @@ export function App() {
           currentHeadings: VERIFICATION_PAGE_HEADINGS,
         };
 
+      // Chapter 4: Troubleshooting Guide
+      case 'troubleshoot-common-errors':
+        return {
+          pageComponent: <CommonErrorsPage onNavigate={handleNavigate} />,
+          currentHeadings: COMMON_ERRORS_PAGE_HEADINGS,
+        };
+      case 'troubleshoot-debugging-toolkit':
+        return {
+          pageComponent: <DebuggingToolkitPage onNavigate={handleNavigate} />,
+          currentHeadings: DEBUGGING_TOOLKIT_HEADINGS,
+        };
+
+      // Chapter 5: Independent Deployment Challenge
+      case 'challenge-project-two':
+        return {
+          pageComponent: <ProjectTwoPage onNavigate={handleNavigate} />,
+          currentHeadings: PROJECT_TWO_PAGE_HEADINGS,
+        };
+      case 'challenge-checklist':
+        return {
+          pageComponent: <IndependentChecklistPage onNavigate={handleNavigate} />,
+          currentHeadings: INDEPENDENT_CHECKLIST_HEADINGS,
+        };
+
       default:
         return {
           pageComponent: <PlaceholderPage pageId={activePage} onNavigate={handleNavigate} />,
@@ -152,7 +200,7 @@ export function App() {
         onOpenSearch={() => setIsSearchOpen(true)}
         theme={theme}
         onToggleTheme={toggleTheme}
-        onNavigateHome={() => handleNavigate('intro-deployment')}
+        onNavigateHome={() => handleNavigate('overview')}
       />
 
       {/* Reading Progress Indicator */}

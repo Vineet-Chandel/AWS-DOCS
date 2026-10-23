@@ -135,7 +135,7 @@ export function Sidebar({
 
               <div className="space-y-0.5">
                 {section.items.map((item) => {
-                  const isActive = activePage === item.id || (activePage === 'overview' && item.id === 'intro-deployment');
+                  const isActive = activePage === item.id;
                   const Icon = ICON_MAP[item.icon] || FileText;
 
                   return (
