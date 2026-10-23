@@ -1,38 +1,80 @@
 # AWS Cloud Launchpad — Deploy Your First Website to AWS
 
-A production-quality, frontend-only documentation workbook website built with **React**, **Vite**, and **Tailwind CSS**.
+A production-grade, frontend-only documentation workbook website built with **React**, **Vite**, and **Tailwind CSS**.
 
-The application combines:
-- **Reference Image 1 (Visual Identity & Content)**: Editorial serif typography, deep navy headings, muted slate body text, restrained blue/amber/emerald/purple color accents, and full technical diagrams for the 2-hour AWS Cloud Launchpad workshop.
-- **Reference Image 2 (Documentation Architecture)**: 3-column layout featuring a global navigation sidebar, breadcrumb hierarchy, central long-form reading surface, and dynamic sticky "On this page" table of contents.
+The application features two complete, interactive chapters with eight sequential lessons:
+- **Chapter 01: Introduction &amp; Prerequisites** (Pages 1–4)
+- **Chapter 02: Step-by-Step Deployment** (Pages 1–4, Steps 1–8)
 
 ---
 
-## Architecture & Features
+## Workbook Curriculum
 
-### 1. Three-Column Layout
-- **Left Column (Global Navigation)**: Desktop width (`w-64`), categorized into the 8 planned workbook sections (`INTRODUCTION`, `GETTING STARTED`, `UNDERSTAND AWS`, `DEPLOY YOUR WEBSITE`, `VERIFY AND TROUBLESHOOT`, `INDEPENDENT CHALLENGE`, `SECURITY AND CLEANUP`, `FURTHER LEARNING`). Highlights the active item with an indicator bar. Transforms into an accessible slide-in drawer on mobile.
-- **Center Column (Main Reading Surface)**: Formatted for optimal readability (`max-w-[840px]`), featuring breadcrumbs, metadata badges, rich diagrams, callouts, and next-chapter navigation.
-- **Right Column ("On this page")**: Sticky local table of contents (`w-56`), tracking scroll position (scroll spy) and highlighting the active heading with a continuous vertical guide.
+### **Chapter 01: Introduction &amp; Prerequisites**
+1. **01 / 1 OF 4 — What is AWS deployment?**
+   - Local vs Cloud vs Live Application 3-column table
+   - Why Developers Use AWS (Accessibility, Scalability, Reliability, Service Choice, Pricing, Security)
+   - Cloud Does Not Automatically Mean Free alert callout
+   - Today's Deployment in One Line pipeline diagram
+2. **01 / 2 OF 4 — How the EC2 deployment fits together**
+   - Interactive SVG/React AWS Cloud, VPC, EC2, Security Group, and IAM diagram
+   - 2-column component job matrix table
+   - Two Paths, Two Jobs (Administrator SSH vs Visitor HTTP)
+3. **01 / 3 OF 4 — AWS services: learn the job, not just the name**
+   - 14-service alternating glossary grid
+   - Quick Memory Trick mnemonic
+   - Authoritative official AWS documentation guides
+4. **01 / 4 OF 4 — Preflight: tools, repository, account and permissions**
+   - Tools You Need 2-column checklist
+   - Local terminal checks (`git --version` and `ssh -V`) with copy control
+   - Starter template: `zirafa/simple-website-template` (`gh-pages` branch)
+   - AWS Account, Key Pair (`chmod 400`), and Least Privilege rules
+   - Interactive 6-item Ready Check
 
-### 2. Introduction Page (All 10 Sections Fully Implemented)
-1. **Page Header**: Breadcrumbs (`Introduction / Overview`), eyebrow (`THE PRACTICAL AWS STARTER`), editorial serif main title, subtitle, and metadata pills (Beginner-friendly, ~120 min, Static website, Hands-on).
-2. **From Repository to Live Website**: Responsive 4-stage pipeline (01 Source: GitHub → 02 Compute: EC2 → 03 Web Server: Nginx → 04 Visitor: Public IP), followed by green network and gray administrative route paths.
-3. **Three Steps to Your First Deployment**: 3 connected learning phases (01 UNDERSTAND, 02 DEPLOY, 03 PROVE IT).
-4. **The Finish Line**: Understated pale-blue callout with solid blue accent border.
-5. **Suggested 120-Minute Run Plan**: 6-phase responsive timeline grid totaling exactly 120 minutes.
-6. **How Does Someone Open Your Website?**: 5-step visitor flow diagram explaining TCP port 80 and Security Group inbound rules.
-7. **How Do You Manage the EC2 Instance?**: Administrator SSH flow, TCP port 22, and IP restriction security distinction.
-8. **What This Workshop Uses — and What It Doesn't**: Two-column comparison clarifying static hosting requirements.
-9. **Your Deployment Journey**: Compact final route summary.
-10. **Ready to Begin?**: Transition and direct navigation card to Chapter 2 (Prerequisites).
+---
 
-### 3. Reading Controls & Usability
-- **Full-Text Search Modal**: Press `⌘K` or click the search bar to search across workbook concepts with keyword highlighting and arrow-key navigation.
-- **Reading Progress Bar**: Subtle indicator at the top tracking scroll percentage.
-- **Light & Dark Mode**: Seamless toggle with `localStorage` persistence and system preference detection.
-- **Back to Top**: Floating button appearing after scrolling down.
-- **Honest Placeholders**: Upcoming chapters clearly indicate development status with quick return navigation back to the Introduction.
+### **Chapter 02: Step-by-Step Deployment (Steps 1–8)**
+1. **02 / 1 OF 4 — Project 1: inspect the files, then open EC2**
+   - **Diagram**: GitHub Repository (`gh-pages`) to EC2 Web Directory (`/usr/share/nginx/html/`)
+   - **Step 1**: Inspect the repository on GitHub
+   - **What is index.html?** informational callout
+   - **Step 2**: Sign in and launch an EC2 instance setting matrix (AMI: Amazon Linux 2023, Instance: t2/t3.micro, Key: aws-class-key)
+   - **Key Pair Safety** security callout
+   - **Screenshot Target 1**: Launch configuration evidence
+2. **02 / 2 OF 4 — Network rules: let visitors in, keep administration restricted**
+   - **Rules Table**: SSH TCP 22 (My IP) and HTTP TCP 80 (Anywhere 0.0.0.0/0)
+   - **Security Warning**: Do Not Open SSH to Everyone
+   - **Step 3**: Configure networking checklist
+   - **Step 4**: Launch and confirm instance readiness (Running state, 2/2 status checks passed, Public IPv4 copied)
+   - **Screenshot Targets 2 + 3**: Inbound rules table and Running instance status
+3. **02 / 3 OF 4 — Connect to the server and install Nginx**
+   - **Step 5**: Connect using SSH (`RUN ON YOUR LAPTOP` terminal panel)
+   - **If SSH Fails**: 6-point systematic diagnostic triage
+   - **Step 6**: Install Git and Nginx on EC2 (`RUN INSIDE THE SSH SESSION` dnf package commands)
+   - **Test Nginx Locally on EC2**: Local HTTP request test (`curl -I http://localhost`)
+   - **Screenshot Targets 4 + 5**: Active terminal and local HTTP 200 verification
+4. **02 / 4 OF 4 — Deploy the repository and open the live website**
+   - **Step 7**: Clone and deploy website files (`git clone --branch gh-pages --single-branch`)
+   - **Copy Only Public Website Files**: Move files to `/usr/share/nginx/html/`, test syntax with `nginx -t`, and reload daemon
+   - **Public Directory Warning**: Never place secrets or credentials in the web root
+   - **Step 8**: Open the live website via public IPv4 address (`http://YOUR_PUBLIC_IP`)
+   - **Screenshot Targets for Live Workshop**: 5-tile schematic capture target checklist
+   - **Screenshot Target 6**: Proof of deployment browser evidence
+   - **Your Website Is Live**: Completion celebration and overview navigation
+
+---
+
+## Features & Usability
+
+- **Three-Column Documentation Shell**:
+  - **Left Sidebar**: 8 ready lessons across Chapters 1 & 2 with active page indicator strip.
+  - **Center Reading Area**: 840px reading width, editorial serif headings, and comfortable typography.
+  - **Right Sidebar ("On this page")**: Automatically derived from the current page's H2/H3 headings with scroll-spy tracking.
+- **Continuous Step Numbering**: Steps 1 to 8 run sequentially across Chapter 2.
+- **Full-Text Document Search (`⌘K`)**: Fast modal search indexing all sections across both chapters.
+- **Terminal Panels**: Distinguished environments (`RUN ON YOUR LAPTOP` vs `RUN INSIDE THE SSH SESSION`) with one-click copy functionality.
+- **Theme Switching**: Dark and light mode with system preference auto-detection and `localStorage` persistence.
+- **100% Frontend-Only**: Zero backend, zero database, zero remote image dependencies.
 
 ---
 
@@ -61,7 +103,7 @@ Open `http://localhost:3000` in your browser.
 
 ### Production Build
 
-Compile the optimized static build into `dist/`:
+Compile the optimized static build:
 
 ```bash
 npm run build
@@ -82,44 +124,44 @@ aws-cloud-launchpad/
 ├── index.html                  # HTML entry point with preconnected editorial fonts
 ├── package.json                # Project dependencies and build scripts
 ├── vite.config.js              # Vite configuration
-├── tailwind.config.js          # Tailwind styling with editorial serif & navy palette
+├── tailwind.config.js          # Tailwind styling with workbook color palette
 ├── src/
 │   ├── components/
 │   │   ├── layout/
 │   │   │   ├── AppHeader.jsx           # Compact header with search, logo, and theme toggle
 │   │   │   ├── Sidebar.jsx             # Left documentation navigation sidebar / mobile drawer
-│   │   │   └── RightTableOfContents.jsx# Sticky "On this page" TOC with scroll spy
+│   │   │   └── RightTableOfContents.jsx# Dynamic "On this page" TOC with scroll spy
 │   │   ├── documentation/
+│   │   │   ├── ChapterHeader.jsx       # Chapter indicator badge (0X / ... • X OF 4)
+│   │   │   ├── ChapterPagination.jsx   # Previous & Next page navigation buttons
+│   │   │   ├── TerminalPanel.jsx       # Reusable terminal panel with environment badges & copy
+│   │   │   ├── DeploymentFilesDiagram.jsx# GitHub (gh-pages) to EC2 /usr/share/nginx/html/ diagram
+│   │   │   ├── ScreenshotTargetsGrid.jsx # 5-tile schematic screenshot evidence targets
+│   │   │   ├── AwsNetworkDiagram.jsx   # SVG/React AWS Cloud, VPC, EC2 & IAM diagram
 │   │   │   ├── Breadcrumbs.jsx         # Clickable breadcrumb hierarchy
-│   │   │   ├── DeploymentFlow.jsx      # 4-stage pipeline diagram & network paths
-│   │   │   ├── LearningPhases.jsx      # 3 connected learning phases
-│   │   │   ├── FinishLineCallout.jsx   # Pale-blue finish line objective box
-│   │   │   ├── WorkshopTimeline.jsx    # 6-phase 120-minute run plan grid
-│   │   │   ├── NetworkFlow.jsx         # Visitor HTTP & admin SSH network flows
-│   │   │   ├── WorkshopComparison.jsx  # Two-column "What We Use vs What We Don't"
-│   │   │   └── NextLessonNav.jsx       # Route summary & next chapter navigation
-│   │   ├── DocumentSearch.jsx          # Full-text Cmd+K search modal
+│   │   │   └── DeploymentFlow.jsx      # 4-stage pipeline diagram & network paths
+│   │   ├── DocumentSearch.jsx          # Full-text Cmd+K search modal across all 8 lessons
 │   │   ├── ReadingProgress.jsx         # Scroll progress bar
 │   │   └── BackToTop.jsx               # Floating scroll-to-top button
 │   ├── data/
-│   │   └── navigation.js               # 8-part workbook curriculum structure
+│   │   └── navigation.js               # Curriculum structure with 8 ready lessons
 │   ├── pages/
-│   │   ├── IntroductionPage.jsx        # Complete Introduction/Overview page (Sections 1-10)
-│   │   └── PlaceholderPage.jsx         # Honest placeholder for upcoming modules
+│   │   ├── DeploymentOverviewPage.jsx  # 01 • Page 1: What is AWS deployment?
+│   │   ├── Ec2ArchitecturePage.jsx     # 01 • Page 2: How the EC2 deployment fits together
+│   │   ├── AwsServicesPage.jsx         # 01 • Page 3: AWS services: learn the job, not just the name
+│   │   ├── PreflightPage.jsx           # 01 • Page 4: Preflight: tools, repository, account & permissions
+│   │   └── step-by-step-deployment/
+│   │       ├── InspectAndLaunchPage.jsx# 02 • Page 1: Project 1: inspect files, open EC2 (Steps 1–2)
+│   │       ├── NetworkingPage.jsx      # 02 • Page 2: Network rules (Steps 3–4)
+│   │       ├── ConnectAndInstallPage.jsx# 02 • Page 3: Connect SSH, install Nginx (Steps 5–6)
+│   │       └── DeployAndVerifyPage.jsx # 02 • Page 4: Deploy repo, open live website (Steps 7–8)
 │   ├── hooks/
 │   │   ├── useActiveHeading.js         # Scroll spy hook
-│   │   ├── useHeadings.js              # Heading extraction hook
 │   │   └── useTheme.js                 # Dark / Light theme state manager
 │   ├── utils/
 │   │   └── slugify.js                  # Slug and anchor generator
-│   ├── App.jsx                         # Main 3-column layout orchestration
+│   ├── App.jsx                         # Main 3-column layout orchestration & hash routing
 │   ├── main.jsx                        # React root entry
 │   └── index.css                       # Global styles & custom scrollbars
 └── README.md
 ```
-
----
-
-## 100% Frontend-Only Guarantee
-
-This application runs purely in the browser. It requires no backend, database, authentication, or external API to deliver its reading experience.

@@ -1,64 +1,334 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { Search, X, Hash, FileText, CornerDownLeft } from 'lucide-react';
-import { slugify } from '../utils/slugify';
+import { Search, X, Hash, CornerDownLeft } from 'lucide-react';
 
 /**
- * Built-in searchable topics from the AWS Cloud Launchpad Introduction and workbook.
+ * Searchable topics across all pages of Chapters 1 and 2.
  */
-const DEFAULT_TOPICS = [
+const SEARCHABLE_TOPICS = [
+  // CHAPTER 1 - PAGE 1
   {
-    heading: 'From Repository to Live Website',
-    slug: 'from-repository-to-live-website',
-    type: 'heading',
-    text: 'Four-stage deployment pipeline: GitHub repository -> Amazon EC2 -> Nginx -> Browser + public IPv4 address.',
+    pageId: 'intro-deployment',
+    pageTitle: '01 • Page 1: What is AWS deployment?',
+    heading: 'Local Development vs Cloud Deployment',
+    slug: 'local-vs-cloud',
+    text: 'Local development on localhost:3000 vs cloud deployment on AWS infrastructure vs live application for internet users.',
   },
   {
-    heading: 'Three Steps to Your First Deployment',
-    slug: 'three-steps-to-your-first-deployment',
-    type: 'heading',
-    text: '01 Understand (prerequisites), 02 Deploy (EC2, Nginx, website files), 03 Prove It (verification and debugging).',
+    pageId: 'intro-deployment',
+    pageTitle: '01 • Page 1: What is AWS deployment?',
+    heading: 'Why Do Developers Use AWS?',
+    slug: 'why-developers-use-aws',
+    text: 'Accessibility, Scalability, Reliability, Service choice, Usage-based pricing, and Security controls.',
   },
   {
-    heading: 'The Finish Line',
-    slug: 'the-finish-line',
-    type: 'heading',
-    text: 'Publish a real static website using Amazon EC2, Amazon Linux 2023 and Nginx; verify public URL; diagnose problems; attempt a second project.',
+    pageId: 'intro-deployment',
+    pageTitle: '01 • Page 1: What is AWS deployment?',
+    heading: 'Cloud Does Not Automatically Mean Free',
+    slug: 'cloud-does-not-mean-free',
+    text: 'Important cost warning: Check current account pricing, available credits, storage, data transfer, and public IPv4 charges before launching resources.',
   },
   {
-    heading: 'Suggested 120-Minute Run Plan',
-    slug: 'suggested-120-minute-run-plan',
-    type: 'heading',
-    text: '00-15 Kickoff, 15-30 File Tour, 30-65 Build, 65-75 Verify, 75-105 Challenge, 105-120 Wrap.',
+    pageId: 'intro-deployment',
+    pageTitle: '01 • Page 1: What is AWS deployment?',
+    heading: "Today's Deployment in One Line",
+    slug: 'todays-deployment-in-one-line',
+    text: 'GitHub repository -> Amazon EC2 -> Nginx -> Browser + public IP. Network path: Visitor -> Security Group (HTTP :80) -> EC2 -> Nginx -> files. Admin path: SSH port 22.',
+  },
+
+  // CHAPTER 1 - PAGE 2
+  {
+    pageId: 'intro-ec2-architecture',
+    pageTitle: '01 • Page 2: How the EC2 deployment fits together',
+    heading: 'The Network in Plain English',
+    slug: 'the-network-in-plain-english',
+    text: 'AWS Cloud, VPC logically isolated network, EC2 instance with Amazon Linux 2023 & Nginx port 80, Security Group stateful firewall, and AWS IAM permissions.',
   },
   {
-    heading: 'How Visitors Reach Your Website',
-    slug: 'how-visitors-reach-your-website',
-    type: 'heading',
-    text: 'Network path: Visitor Browser -> Security Group (HTTP TCP port 80) -> EC2 Public IP -> Nginx -> Website files.',
+    pageId: 'intro-ec2-architecture',
+    pageTitle: '01 • Page 2: How the EC2 deployment fits together',
+    heading: 'What Does Each Component Do?',
+    slug: 'what-does-each-component-do',
+    text: 'Job matrix: GitHub repository, Amazon EC2, Amazon Linux 2023, Nginx, Security group, Public IPv4 address, and IAM.',
   },
   {
-    heading: 'How You Connect to the Server',
-    slug: 'how-you-connect-to-the-server',
-    type: 'heading',
-    text: 'Administrator path: Your Computer -> SSH (TCP port 22, restricted to your IP) -> EC2 terminal.',
+    pageId: 'intro-ec2-architecture',
+    pageTitle: '01 • Page 2: How the EC2 deployment fits together',
+    heading: 'Two Paths, Two Jobs',
+    slug: 'two-paths-two-jobs',
+    text: 'Administrator path uses SSH on port 22 to control server. Visitor path uses HTTP on port 80 to view files. Never expose SSH to public internet.',
+  },
+
+  // CHAPTER 1 - PAGE 3
+  {
+    pageId: 'intro-aws-services',
+    pageTitle: '01 • Page 3: AWS services: learn the job, not just the name',
+    heading: 'AWS Services Students Should Recognize',
+    slug: 'aws-services-students-should-recognize',
+    text: 'Glossary of 14 key AWS services: EC2, Region, Availability Zone, IAM, VPC, Security Group, S3, RDS, ELB, CloudWatch, Lambda, Route 53, CloudFront, Budgets.',
   },
   {
-    heading: 'What This Workshop Uses — and What It Doesn’t',
-    slug: 'what-this-workshop-uses',
-    type: 'heading',
-    text: 'What we use: GitHub repo, Amazon EC2, Amazon Linux 2023, Nginx, Public IPv4. What we do not need: database, Node.js server runtime, backend API.',
+    pageId: 'intro-aws-services',
+    pageTitle: '01 • Page 3: AWS services: learn the job, not just the name',
+    heading: 'Quick Memory Trick',
+    slug: 'quick-memory-trick',
+    text: 'EC2 runs a virtual machine. S3 stores objects. RDS manages relational databases. Lambda runs event-driven code. CloudWatch observes systems. Route 53 handles DNS. IAM grants permissions. Security groups filter network traffic.',
   },
   {
-    heading: 'Your Deployment Journey',
-    slug: 'your-deployment-journey',
-    type: 'heading',
-    text: 'GitHub -> Amazon EC2 (Amazon Linux 2023) -> Nginx -> Public IPv4 URL.',
+    pageId: 'intro-aws-services',
+    pageTitle: '01 • Page 3: AWS services: learn the job, not just the name',
+    heading: 'Official Documentation',
+    slug: 'official-documentation',
+    text: 'Authoritative further reading: EC2 Security Groups, Identity and Access Management, Security Group Rules Reference, Amazon Linux 2023 tutorials.',
+  },
+
+  // CHAPTER 1 - PAGE 4
+  {
+    pageId: 'intro-preflight',
+    pageTitle: '01 • Page 4: Preflight: tools, repository, account and permissions',
+    heading: 'Tools You Need',
+    slug: 'tools-you-need',
+    text: 'Laptop + internet, Git + SSH client, ZIP / file manager, Node.js / npm, AWS CLI, Approved AWS login.',
   },
   {
-    heading: 'Ready to Begin?',
-    slug: 'ready-to-begin',
-    type: 'heading',
-    text: 'Next lesson: Getting Started & Prerequisites. Verify AWS account access, configure MFA, and prepare website files.',
+    pageId: 'intro-preflight',
+    pageTitle: '01 • Page 4: Preflight: tools, repository, account and permissions',
+    heading: 'Local Checks',
+    slug: 'local-checks',
+    text: 'Run on your laptop: git --version checks Git availability. ssh -V checks OpenSSH client installation.',
+  },
+  {
+    pageId: 'intro-preflight',
+    pageTitle: '01 • Page 4: Preflight: tools, repository, account and permissions',
+    heading: 'GitHub Repository Access',
+    slug: 'github-repository-access',
+    text: 'Starter template: zirafa/simple-website-template gh-pages branch. Inspect HTML, CSS, JS starter files before deployment.',
+  },
+  {
+    pageId: 'intro-preflight',
+    pageTitle: '01 • Page 4: Preflight: tools, repository, account and permissions',
+    heading: 'AWS Account and Permissions',
+    slug: 'aws-account-and-permissions',
+    text: 'Checklist: approved account, EC2 launching permissions, key pair handling (chmod 400), least privilege, resource cleanup, MFA, credential confidentiality.',
+  },
+  {
+    pageId: 'intro-preflight',
+    pageTitle: '01 • Page 4: Preflight: tools, repository, account and permissions',
+    heading: 'Ready Check',
+    slug: 'ready-check',
+    text: 'Interactive 6-point checklist confirming laptop, AWS login, GitHub repo, EC2 permissions, SSH connection, and pricing awareness before launching EC2.',
+  },
+
+  // CHAPTER 2 - PAGE 1
+  {
+    pageId: 'deploy-inspect-and-launch',
+    pageTitle: '02 • Page 1: Project 1: inspect the files, then open EC2',
+    heading: 'Project 1: Files the Browser Needs',
+    slug: 'project-1-files-the-browser-needs',
+    text: 'GitHub repository (gh-pages) to /usr/share/nginx/html/: index.html, style.css, script.js, logo.png, background.jpg.',
+  },
+  {
+    pageId: 'deploy-inspect-and-launch',
+    pageTitle: '02 • Page 1: Project 1: inspect the files, then open EC2',
+    heading: 'Step 1 — Inspect the repository',
+    slug: 'step-1-inspect-the-repository',
+    text: 'Step 1: Inspect starter code on GitHub gh-pages branch. Confirm filenames index.html, style.css, script.js, logo.png, background.jpg.',
+  },
+  {
+    pageId: 'deploy-inspect-and-launch',
+    pageTitle: '02 • Page 1: Project 1: inspect the files, then open EC2',
+    heading: 'What Is index.html?',
+    slug: 'what-is-index-html',
+    text: 'The default entry page of a simple website. Web server automatically returns this file upon receiving a root request.',
+  },
+  {
+    pageId: 'deploy-inspect-and-launch',
+    pageTitle: '02 • Page 1: Project 1: inspect the files, then open EC2',
+    heading: 'Step 2 — Sign in and launch an EC2 instance',
+    slug: 'step-2-sign-in-and-launch-ec2',
+    text: 'Step 2: Sign into AWS Console. Name: aws-class-website, AMI: Amazon Linux 2023, Instance: t2.micro / t3.micro, Key pair: aws-class-key (.pem).',
+  },
+  {
+    pageId: 'deploy-inspect-and-launch',
+    pageTitle: '02 • Page 1: Project 1: inspect the files, then open EC2',
+    heading: 'Key Pair Safety',
+    slug: 'key-pair-safety',
+    text: 'Store the private .pem key securely. Never upload to GitHub, share in chat, or include in screenshots.',
+  },
+  {
+    pageId: 'deploy-inspect-and-launch',
+    pageTitle: '02 • Page 1: Project 1: inspect the files, then open EC2',
+    heading: 'Screenshot Target 1',
+    slug: 'screenshot-target-1',
+    text: 'Evidence capture: EC2 Launch Instance page showing selected OS, instance type, and key-pair name.',
+  },
+
+  // CHAPTER 2 - PAGE 2
+  {
+    pageId: 'deploy-networking',
+    pageTitle: '02 • Page 2: Network rules: let visitors in, keep administration restricted',
+    heading: 'Understand the Required Inbound Rules',
+    slug: 'understand-the-required-inbound-rules',
+    text: 'SSH TCP port 22 restricted to My IP for administration. HTTP TCP port 80 from Anywhere IPv4 (0.0.0.0/0) for public website visitors.',
+  },
+  {
+    pageId: 'deploy-networking',
+    pageTitle: '02 • Page 2: Network rules: let visitors in, keep administration restricted',
+    heading: 'Do Not Open SSH to Everyone',
+    slug: 'do-not-open-ssh-to-everyone',
+    text: 'Keep SSH port 22 restricted to My IP. Do not use 0.0.0.0/0 for SSH just because it is easier.',
+  },
+  {
+    pageId: 'deploy-networking',
+    pageTitle: '02 • Page 2: Network rules: let visitors in, keep administration restricted',
+    heading: 'Step 3 — Configure networking',
+    slug: 'step-3-configure-networking',
+    text: 'Step 3: Create security group, configure inbound rules for SSH 22 (My IP) and HTTP 80 (0.0.0.0/0), ensure public IPv4 assignment.',
+  },
+  {
+    pageId: 'deploy-networking',
+    pageTitle: '02 • Page 2: Network rules: let visitors in, keep administration restricted',
+    heading: 'Step 4 — Launch and confirm readiness',
+    slug: 'step-4-launch-and-confirm-readiness',
+    text: 'Step 4: Launch instance. Wait for state Running, status checks 2/2 passed, and copy Public IPv4 address.',
+  },
+  {
+    pageId: 'deploy-networking',
+    pageTitle: '02 • Page 2: Network rules: let visitors in, keep administration restricted',
+    heading: 'Screenshot Targets 2 + 3',
+    slug: 'screenshot-targets-2-and-3',
+    text: 'Evidence capture: Inbound rules table (SSH 22 & HTTP 80) and Instances view showing Running status and Public IPv4.',
+  },
+
+  // CHAPTER 2 - PAGE 3
+  {
+    pageId: 'deploy-connect-and-install',
+    pageTitle: '02 • Page 3: Connect to the server and install Nginx',
+    heading: 'Step 5 — Connect using SSH',
+    slug: 'step-5-connect-using-ssh',
+    text: 'Step 5: Run on laptop: chmod 400 ~/Downloads/aws-class-key.pem && ssh -i ~/Downloads/aws-class-key.pem ec2-user@YOUR_PUBLIC_IP.',
+  },
+  {
+    pageId: 'deploy-connect-and-install',
+    pageTitle: '02 • Page 3: Connect to the server and install Nginx',
+    heading: 'If SSH Fails',
+    slug: 'if-ssh-fails',
+    text: 'Troubleshooting: verify key path, key pair match, port 22 inbound rule, instance running, public IP, and ec2-user username.',
+  },
+  {
+    pageId: 'deploy-connect-and-install',
+    pageTitle: '02 • Page 3: Connect to the server and install Nginx',
+    heading: 'Step 6 — Install Git and Nginx on EC2',
+    slug: 'step-6-install-git-and-nginx',
+    text: 'Step 6: Run inside SSH: sudo dnf update -y && sudo dnf install -y git nginx && sudo systemctl enable --now nginx && sudo systemctl is-active nginx.',
+  },
+  {
+    pageId: 'deploy-connect-and-install',
+    pageTitle: '02 • Page 3: Connect to the server and install Nginx',
+    heading: 'Test Nginx Locally on EC2',
+    slug: 'test-nginx-locally-on-ec2',
+    text: 'Verify web server locally on server: curl -I http://localhost. Expected response: HTTP/1.1 200 OK.',
+  },
+  {
+    pageId: 'deploy-connect-and-install',
+    pageTitle: '02 • Page 3: Connect to the server and install Nginx',
+    heading: 'Screenshot Targets 4 + 5',
+    slug: 'screenshot-targets-4-and-5',
+    text: 'Evidence capture: Connected Amazon Linux terminal, Nginx active status, and local HTTP 200 curl test.',
+  },
+
+  // CHAPTER 2 - PAGE 4
+  {
+    pageId: 'deploy-and-verify',
+    pageTitle: '02 • Page 4: Deploy the repository and open the live website',
+    heading: 'Step 7 — Clone and deploy website files',
+    slug: 'step-7-clone-and-deploy-website-files',
+    text: 'Step 7: git clone --branch gh-pages --single-branch https://github.com/zirafa/simple-website-template.git my-first-website.',
+  },
+  {
+    pageId: 'deploy-and-verify',
+    pageTitle: '02 • Page 4: Deploy the repository and open the live website',
+    heading: 'Copy Only Public Website Files',
+    slug: 'copy-only-public-website-files',
+    text: 'sudo cp index.html style.css script.js logo.png background.jpg /usr/share/nginx/html/ && sudo nginx -t && sudo systemctl reload nginx.',
+  },
+  {
+    pageId: 'deploy-and-verify',
+    pageTitle: '02 • Page 4: Deploy the repository and open the live website',
+    heading: 'Public Directory = Public Files',
+    slug: 'public-directory-warning',
+    text: 'Never place .env files, passwords, private SSH keys, or tokens in /usr/share/nginx/html/. Keep secrets outside the web root.',
+  },
+  {
+    pageId: 'deploy-and-verify',
+    pageTitle: '02 • Page 4: Deploy the repository and open the live website',
+    heading: 'Step 8 — Open the live website',
+    slug: 'step-8-open-the-live-website',
+    text: 'Step 8: Open http://YOUR_PUBLIC_IP in web browser. Verify starter website renders live on the public internet.',
+  },
+  {
+    pageId: 'deploy-and-verify',
+    pageTitle: '02 • Page 4: Deploy the repository and open the live website',
+    heading: 'Screenshot Targets for the Live Workshop',
+    slug: 'screenshot-targets-for-the-live-workshop',
+    text: '5 evidence targets: SCREEN 01 Launch Page, SCREEN 02 Network Rules, SCREEN 03 Instance Status, SCREEN 04 Terminal, SCREEN 05 Browser.',
+  },
+  {
+    pageId: 'deploy-and-verify',
+    pageTitle: '02 • Page 4: Deploy the repository and open the live website',
+    heading: 'Screenshot Target 6 — Proof of Deployment',
+    slug: 'screenshot-target-6-proof-of-deployment',
+    text: 'Evidence capture: Browser address bar showing public IPv4 address and correctly rendered deployed website.',
+  },
+  {
+    pageId: 'deploy-and-verify',
+    pageTitle: '02 • Page 4: Deploy the repository and open the live website',
+    heading: 'Your Website Is Live',
+    slug: 'your-website-is-live',
+    text: 'Completion: Live static website running on Nginx, Amazon Linux 2023, and Amazon EC2.',
+  },
+
+  // CHAPTER 3 - VERIFICATION CHECKLIST
+  {
+    pageId: 'verification-checklist',
+    pageTitle: '03 • Verification Checklist: Prove the website is really deployed',
+    heading: 'Deployment Verification Checklist',
+    slug: 'deployment-verification-checklist',
+    text: 'Checklist: EC2 is Running, Public address exists, Security group is correct, Nginx is active, Website files are in place, Local HTTP succeeds, Public URL opens, Public HTTP returns success.',
+  },
+  {
+    pageId: 'verification-checklist',
+    pageTitle: '03 • Verification Checklist: Prove the website is really deployed',
+    heading: 'Verification Commands',
+    slug: 'verification-commands',
+    text: 'sudo systemctl status nginx --no-pager, curl -I http://localhost, ls -la /usr/share/nginx/html on EC2, and curl -I http://YOUR_PUBLIC_IP on laptop.',
+  },
+  {
+    pageId: 'verification-checklist',
+    pageTitle: '03 • Verification Checklist: Prove the website is really deployed',
+    heading: 'What Does HTTP 200 OK Mean?',
+    slug: 'what-does-http-200-ok-mean',
+    text: 'HTTP/1.1 200 OK status code explanation. Differences between 200 OK, 403 Forbidden, 404 Not Found, and connection timeouts or refusal.',
+  },
+  {
+    pageId: 'verification-checklist',
+    pageTitle: '03 • Verification Checklist: Prove the website is really deployed',
+    heading: 'What Does a Successful Deployment Look Like?',
+    slug: 'what-does-a-successful-deployment-look-like',
+    text: 'Sequential pipeline: EC2 Running -> Nginx Active -> Files Present -> Local HTTP Success -> Public HTTP Success -> Browser Displays Website.',
+  },
+  {
+    pageId: 'verification-checklist',
+    pageTitle: '03 • Verification Checklist: Prove the website is really deployed',
+    heading: 'If a Check Fails, Start Here',
+    slug: 'if-a-check-fails',
+    text: 'Troubleshooting table: EC2 not running, status checks not passed, Nginx inactive, local HTTP fails, local HTTP works but public HTTP fails, default Nginx page appears, images or styles missing, public IP changed.',
+  },
+  {
+    pageId: 'verification-checklist',
+    pageTitle: '03 • Verification Checklist: Prove the website is really deployed',
+    heading: 'Ready for the Next Challenge?',
+    slug: 'ready-for-the-next-challenge',
+    text: 'Milestone completion: Cloud compute, VPC networking, firewall security, SSH authentication, Nginx web server, and production static site verification.',
   },
 ];
 
@@ -72,16 +342,13 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
     const q = query.trim().toLowerCase();
     if (!q) return [];
 
-    const matches = [];
-    for (const item of DEFAULT_TOPICS) {
-      const headingMatch = item.heading.toLowerCase().includes(q);
-      const textMatch = item.text.toLowerCase().includes(q);
-
-      if (headingMatch || textMatch) {
-        matches.push(item);
-      }
-    }
-    return matches;
+    return SEARCHABLE_TOPICS.filter((item) => {
+      return (
+        item.heading.toLowerCase().includes(q) ||
+        item.text.toLowerCase().includes(q) ||
+        item.pageTitle.toLowerCase().includes(q)
+      );
+    });
   }, [query]);
 
   // Focus input on open
@@ -95,7 +362,7 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
     }
   }, [isOpen]);
 
-  // Handle global keyboard shortcuts (Cmd+K / Ctrl+K)
+  // Global Cmd+K / Ctrl+K shortcut
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -128,15 +395,17 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
 
   const handleSelect = (item) => {
     onSelectResult(item);
-    if (item.slug) {
-      const el = document.getElementById(item.slug);
-      if (el) {
-        const topOffset = 80;
-        const pos = el.getBoundingClientRect().top + window.pageYOffset - topOffset;
-        window.scrollTo({ top: pos, behavior: 'smooth' });
-        window.history.pushState(null, '', `#${item.slug}`);
+    setTimeout(() => {
+      if (item.slug) {
+        const el = document.getElementById(item.slug);
+        if (el) {
+          const topOffset = 80;
+          const pos = el.getBoundingClientRect().top + window.pageYOffset - topOffset;
+          window.scrollTo({ top: pos, behavior: 'smooth' });
+          window.history.pushState(null, '', `#${item.slug}`);
+        }
       }
-    }
+    }, 100);
     onClose();
   };
 
@@ -165,11 +434,11 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
       aria-label="Search documentation"
     >
       <div
-        className="w-full max-w-xl rounded-xl bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 shadow-2xl overflow-hidden flex flex-col max-h-[75vh]"
+        className="w-full max-w-xl rounded-xl bg-white dark:bg-zinc-950 border border-workbook-border dark:border-zinc-800 shadow-2xl overflow-hidden flex flex-col max-h-[75vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="flex items-center px-4 py-3.5 border-b border-slate-200 dark:border-zinc-800 gap-3">
+        <div className="flex items-center px-4 py-3.5 border-b border-workbook-border dark:border-zinc-800 gap-3">
           <Search className="w-5 h-5 text-slate-400 shrink-0" />
           <input
             ref={inputRef}
@@ -180,7 +449,7 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
               setSelectedIndex(0);
             }}
             onKeyDown={handleKeyDown}
-            placeholder="Search workbook sections, network rules, EC2, Nginx..."
+            placeholder="Search chapters, steps, EC2, Nginx, port 80, SSH..."
             className="flex-1 bg-transparent text-sm text-slate-900 dark:text-zinc-100 placeholder-slate-400 focus:outline-none"
           />
           {query && (
@@ -193,7 +462,7 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
               <X className="w-4 h-4" />
             </button>
           )}
-          <span className="hidden sm:inline-block text-[10px] uppercase font-mono px-1.5 py-0.5 rounded border border-slate-200 dark:border-zinc-800 text-slate-400">
+          <span className="hidden sm:inline-block text-[10px] uppercase font-mono px-1.5 py-0.5 rounded border border-workbook-border dark:border-zinc-800 text-slate-400">
             esc
           </span>
         </div>
@@ -202,7 +471,7 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
         <div ref={resultsListRef} className="flex-1 overflow-y-auto p-2 custom-scrollbar">
           {!query.trim() ? (
             <div className="py-12 text-center text-slate-400 dark:text-zinc-500 text-xs">
-              Type keywords to search across the workbook sections (e.g. EC2, Nginx, port 80, SSH, timeline)...
+              Type keywords to search across all lessons in Chapters 1 &amp; 2...
             </div>
           ) : results.length === 0 ? (
             <div className="py-12 text-center">
@@ -210,7 +479,7 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
                 No matching results found
               </p>
               <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">
-                No sections match &ldquo;{query}&rdquo;.
+                No workbook section matches &ldquo;{query}&rdquo;.
               </p>
             </div>
           ) : (
@@ -222,7 +491,7 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
                 const isSelected = idx === selectedIndex;
                 return (
                   <button
-                    key={`${item.slug}-${idx}`}
+                    key={`${item.pageId}-${item.slug}-${idx}`}
                     type="button"
                     onClick={() => handleSelect(item)}
                     onMouseEnter={() => setSelectedIndex(idx)}
@@ -236,7 +505,10 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
                       <Hash className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between text-xs font-bold text-navy-950 dark:text-zinc-100">
+                      <div className="text-[10px] font-mono text-workbook-orange font-semibold uppercase tracking-wider mb-0.5">
+                        {item.pageTitle}
+                      </div>
+                      <div className="flex items-center justify-between text-xs font-bold text-workbook-navy dark:text-zinc-100">
                         <span className="truncate">{highlightMatch(item.heading, query.trim())}</span>
                         {isSelected && (
                           <CornerDownLeft className="w-3.5 h-3.5 text-slate-400 shrink-0 ml-2" />
@@ -254,7 +526,7 @@ export function DocumentSearch({ isOpen, onClose, onSelectResult = () => {} }) {
         </div>
 
         {/* Modal Footer */}
-        <div className="px-4 py-2 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 text-[11px] text-slate-400 dark:text-zinc-500 flex items-center justify-between">
+        <div className="px-4 py-2 border-t border-workbook-border dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 text-[11px] text-slate-400 dark:text-zinc-500 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span>
               <kbd className="font-mono bg-slate-200 dark:bg-zinc-800 px-1 rounded text-[10px]">↑</kbd>{' '}
